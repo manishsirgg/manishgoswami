@@ -14,6 +14,9 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE
 } from './constants';
+import heroImage from './assets/hero.png';
+import logo from './assets/logo.png';
+import favIcon from './assets/favicon.ico;
 
 const XIcon = ({ size = 18 }: { size?: number }) => (
   <svg 
@@ -28,11 +31,11 @@ const XIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 const SOCIAL_LINKS = [
-  { name: 'LinkedIn', href: 'https://linkedin.com', icon: <Linkedin size={18} /> },
-  { name: 'X', href: 'https://x.com', icon: <XIcon size={18} /> },
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/manishsirg', icon: <Linkedin size={18} /> },
+  { name: 'X', href: 'https://x.com/manishsirg', icon: <XIcon size={18} /> },
   { name: 'YouTube', href: 'https://youtube.com/@manishsirg', icon: <Youtube size={18} /> },
   { name: 'Instagram', href: 'https://instagram.com/manishsirgg', icon: <Instagram size={18} /> },
-  { name: 'Spotify', href: 'https://spotify.com', icon: <Music size={18} /> },
+  { name: 'Spotify', href: 'creators.spotify.com/pod/show/manishsirg', icon: <Music size={18} /> },
 ];
 
 const Navbar = () => {
@@ -62,7 +65,7 @@ const Navbar = () => {
           className="flex items-center gap-3 group"
         >
           <div className="w-10 h-10 bg-white flex items-center justify-center overflow-hidden relative">
-             <img src="https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/mg-logo-reproduction.png" alt="MG Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => {
+             <img src={logo} alt="MG Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => {
                e.currentTarget.style.display = 'none';
                e.currentTarget.parentElement!.innerHTML = '<span class="text-black font-bold text-xl">MG</span>';
              }} />
@@ -179,6 +182,51 @@ const Navbar = () => {
 };
 
 const App = () => {
+
+  {/* FORM STATE */}
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen gradient-mesh selection:bg-[#0A84FF] selection:text-white">
       <Navbar />
@@ -231,7 +279,7 @@ const App = () => {
             <div className="relative aspect-[4/5] max-w-md mx-auto grayscale hover:grayscale-0 transition-all duration-1000 group">
                <div className="absolute inset-0 border-2 border-[#0A84FF]/30 -translate-x-6 translate-y-6 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700"></div>
                <img 
-                 src="https://picsum.photos/seed/executive-manish/800/1000" 
+                 src={heroImage} 
                  alt="Manish Goswami" 
                  className="w-full h-full object-cover rounded-sm relative z-10 border border-white/10"
                  referrerPolicy="no-referrer"
@@ -412,91 +460,83 @@ const App = () => {
 
 
       {/* Contact Section */}
-      <section id="contact" className="py-40 px-6 bg-black relative">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-start">
-          <div className="space-y-16">
-            <div className="space-y-8">
-              <span className="text-[#0A84FF] font-black tracking-[0.4em] uppercase text-xs">Engagement</span>
-              <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8]">Ready to <br /> Build With <br /> <span className="text-[#0A84FF]">Clarity?</span></h2>
-              <p className="text-white/40 text-xl md:text-2xl font-light leading-relaxed max-w-xl text-balance">
-                High-stakes growth requires precision. For those seeking structured advancement and engineered systems, let's open the dialogue.
-              </p>
-            </div>
+      <section id="contact" className="py-40 px-6 bg-black">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20">
 
-            <div className="space-y-8">
-               <motion.div whileHover={{ x: 10 }} className="flex items-center gap-8 group">
-                 <div className="w-16 h-16 bg-white/5 flex items-center justify-center rounded-sm border border-white/10 group-hover:bg-[#0A84FF]/20 group-hover:border-[#0A84FF]/50 transition-all">
-                   <Mail className="text-[#0A84FF]" size={24} />
-                 </div>
-                 <div>
-                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 mb-2">Send a Message</div>
-                   <a href={`mailto:${CONTACT_EMAIL}`} className="text-2xl font-black tracking-tighter uppercase hover:text-[#0A84FF] transition-colors">{CONTACT_EMAIL}</a>
-                 </div>
-               </motion.div>
-               <motion.div whileHover={{ x: 10 }} className="flex items-center gap-8 group">
-                 <div className="w-16 h-16 bg-white/5 flex items-center justify-center rounded-sm border border-white/10 group-hover:bg-[#0A84FF]/20 group-hover:border-[#0A84FF]/50 transition-all">
-                   <Phone className="text-[#0A84FF]" size={24} />
-                 </div>
-                 <div>
-                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 mb-2">Direct Line</div>
-                   <a href={`tel:${CONTACT_PHONE.replace(/-/g, '')}`} className="text-2xl font-black tracking-tighter uppercase hover:text-[#0A84FF] transition-colors">{CONTACT_PHONE}</a>
-                 </div>
-               </motion.div>
-               <motion.div whileHover={{ x: 10 }} className="flex items-center gap-8 group">
-                 <div className="w-16 h-16 bg-white/5 flex items-center justify-center rounded-sm border border-white/10 group-hover:bg-[#25D366]/20 group-hover:border-[#25D366]/50 transition-all">
-                   <MessageSquare className="text-[#25D366]" size={24} />
-                 </div>
-                 <div>
-                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 mb-2">Instant Access</div>
-                   <a href={`https://wa.me/${CONTACT_PHONE.replace(/[+-]/g, '')}`} className="text-2xl font-black tracking-tighter uppercase hover:text-[#25D366] transition-colors">WhatsApp Strategic Chat</a>
-                 </div>
-               </motion.div>
-            </div>
+          <div>
+            <h2 className="text-6xl font-black uppercase mb-6">
+              Ready To Build With <span className="text-[#0A84FF]">Clarity?</span>
+            </h2>
+            <p>Email: {CONTACT_EMAIL}</p>
+            <p>Phone: {CONTACT_PHONE}</p>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-white/[0.02] border border-white/5 p-12 md:p-16 rounded-sm backdrop-blur-sm shadow-2xl"
-          >
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Full Name</label>
-                  <input type="text" placeholder="Your name" className="w-full bg-white/5 border border-white/10 p-5 text-white focus:outline-none focus:border-[#0A84FF] transition-colors font-bold" />
-                </div>
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Email Address</label>
-                  <input type="email" placeholder="email@company.com" className="w-full bg-white/5 border border-white/10 p-5 text-white focus:outline-none focus:border-[#0A84FF] transition-colors font-bold" />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Inquiry Subject</label>
-                <select className="w-full bg-white/5 border border-white/10 p-5 text-white focus:outline-none focus:border-[#0A84FF] transition-colors appearance-none font-bold">
-                  <option className="bg-black">Life Coaching & Personal Development</option>
-                  <option className="bg-black">Education Consultancy</option>
-                  <option className="bg-black">Business Consultancy</option>
-                  <option className="bg-black">Other Inquiries</option>
-                </select>
-              </div>
-              <div className="space-y-3">
-                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Brief Context</label>
-                <textarea rows={5} placeholder="Describe your current bottleneck..." className="w-full bg-white/5 border border-white/10 p-5 text-white focus:outline-none focus:border-[#0A84FF] transition-colors resize-none font-bold"></textarea>
-              </div>
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-[#0A84FF] text-white py-6 font-black uppercase tracking-[0.4em] hover:bg-[#0070E0] transition-all flex items-center justify-center gap-4 group shadow-[0_20px_40px_rgba(10,132,255,0.3)] text-xs"
+          <div className="bg-white/5 border border-white/10 p-10">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Full Name"
+                className="w-full bg-black border border-white/20 p-4"
+              />
+
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="Email Address"
+                className="w-full bg-black border border-white/20 p-4"
+              />
+
+              <select
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                required
+                className="w-full bg-black border border-white/20 p-4"
               >
-                Initiate Strategy Session
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </motion.button>
+                <option value="">Select Inquiry</option>
+                <option value="Life Coaching">Life Coaching</option>
+                <option value="Education Consultancy">Education Consultancy</option>
+                <option value="Business Consultancy">Business Consultancy</option>
+              </select>
+
+              <textarea
+                rows={5}
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                placeholder="Describe your current bottleneck..."
+                className="w-full bg-black border border-white/20 p-4"
+              />
+
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="w-full bg-[#0A84FF] py-4 font-bold uppercase"
+              >
+                {status === 'sending' ? 'Sending...' : 'Initiate Strategy Session'}
+              </button>
+
+              {status === 'success' && (
+                <p className="text-green-400 text-sm">Message sent successfully.</p>
+              )}
+              {status === 'error' && (
+                <p className="text-red-400 text-sm">Something went wrong.</p>
+              )}
+
             </form>
-          </motion.div>
+          </div>
         </div>
       </section>
-
+      
       {/* Footer */}
       <footer className="py-32 px-6 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto">
