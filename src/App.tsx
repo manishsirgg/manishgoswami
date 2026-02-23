@@ -16,7 +16,7 @@ import {
 } from './constants';
 import heroImage from './assets/hero.png';
 import logo from './assets/logo.png';
-import favIcon from './assets/favicon.ico;
+import favIcon from './assets/favicon.ico';
 
 const XIcon = ({ size = 18 }: { size?: number }) => (
   <svg 

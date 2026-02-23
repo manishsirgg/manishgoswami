@@ -67,8 +67,8 @@ export const PHILOSOPHY: PhilosophyItem[] = [
 ];
 
 export const VENTURES: Venture[] = [
-  { name: "EvoLeveX", description: "Advanced learning systems for the modern era.", url: "#" },
-  { name: "VidyaInfinity", description: "Empowering educational foundations.", url: "#" },
-  { name: "InfinityGrowthTech", description: "Technological solutions for scalable business.", url: "#" },
-  { name: "DaPear", description: "Strategic consulting for niche markets.", url: "#" }
+  { name: "EvoLeveX", description: "Advanced learning systems for the modern era.", url: "https://evolevex.com" },
+  { name: "VidyaInfinity", description: "Empowering educational foundations.", url: "https://vidyainfinity.com" },
+  { name: "InfinityGrowthTech", description: "Technological solutions for scalable business.", url: "https://infinitygrowthtech.com" },
+  { name: "DaPear", description: "Strategic consulting for niche markets.", url: "https://evolevex.com/dapearstore" }
 ];
