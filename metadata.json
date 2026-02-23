@@ -1,0 +1,8 @@
+{
+  "name": "Manish Sir G - Personal Brand Portfolio",
+  "description": "A premium, executive-level personal brand website for Manish Sir G—Life Coach, Education Consultant, and Business Consultant.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
