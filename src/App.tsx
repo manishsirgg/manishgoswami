@@ -544,7 +544,10 @@ const App = () => {
             <div className="lg:col-span-2 space-y-10">
               <div className="flex items-center gap-5">
                 <div className="w-14 h-14 bg-white flex items-center justify-center">
-                  <span className="text-black font-black text-2xl">MG</span>
+                  <img src={logo} alt="MG Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => {
+               e.currentTarget.style.display = 'none';
+               e.currentTarget.parentElement!.innerHTML = '<span class="text-black font-bold text-xl">MG</span>';
+             }} />
                 </div>
                 <div className="flex flex-col">
                   <h3 className="text-3xl font-black uppercase tracking-tighter leading-none">Manish Sir G</h3>
