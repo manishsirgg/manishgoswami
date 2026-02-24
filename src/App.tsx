@@ -35,7 +35,7 @@ const SOCIAL_LINKS = [
   { name: 'X', href: 'https://x.com/manishsirg', icon: <XIcon size={18} /> },
   { name: 'YouTube', href: 'https://youtube.com/@manishsirg', icon: <Youtube size={18} /> },
   { name: 'Instagram', href: 'https://instagram.com/manishsirgg', icon: <Instagram size={18} /> },
-  { name: 'Spotify', href: 'creators.spotify.com/pod/show/manishsirg', icon: <Music size={18} /> },
+  { name: 'Spotify', href: 'https://creators.spotify.com/pod/show/manishsirg', icon: <Music size={18} /> },
 ];
 
 const Navbar = () => {
