@@ -5,7 +5,7 @@ import { ServicePillar, PhilosophyItem, Venture } from './types';
 
 export const BRAND_NAME = "Manish Sir G";
 export const BRAND_TITLE = "Life Coaching | Education Consultancy | Business Consultancy";
-export const CONTACT_EMAIL = "info@manishgoswami.com";
+export const CONTACT_EMAIL = "manishsirgg@gmail.com";
 export const CONTACT_PHONE = "+91-8989601701";
 
 export const SERVICE_PILLARS: ServicePillar[] = [
