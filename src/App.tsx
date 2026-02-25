@@ -251,7 +251,7 @@ const App = () => {
             </div>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter uppercase">
               Clarity <br />
-              <span className="text-[#0A84FF]">Scale</span> <br />
+              <span className="text-[#0A84FF]">Identity</span> <br />
               <span className="text-white/20">Impact</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/50 max-w-xl font-light leading-relaxed text-balance">
