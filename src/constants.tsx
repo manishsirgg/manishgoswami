@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Shield, Target, TrendingUp } from 'lucide-react';
+import { Shield, Target, TrendingUp, Dumbbell, GraduationCap, Building2, Home, Plane, ShoppingBag } from 'lucide-react';
 import { ServicePillar, PhilosophyItem, Venture } from './types';
 
 export const BRAND_NAME = "Manish Sir G";
@@ -67,8 +67,58 @@ export const PHILOSOPHY: PhilosophyItem[] = [
 ];
 
 export const VENTURES: Venture[] = [
-  { name: "EvoLeveX", description: "Advanced learning systems for the modern era.", url: "https://evolevex.com" },
-  { name: "VidyaInfinity", description: "Empowering educational foundations.", url: "https://vidyainfinity.com" },
-  { name: "InfinityGrowthTech", description: "Technological solutions for scalable business.", url: "https://infinitygrowthtech.com" },
-  { name: "DaPear", description: "Strategic consulting for niche markets.", url: "https://evolevex.com/dapearstore" }
+  {
+    name: "EvoLeveX",
+    positioning: "Elite male performance system",
+    tagline: "Evolve. Elevate. Excel.",
+    offer: ["Discipline system", "Masculine development", "High-performance frameworks"],
+    cta: "Enter Academy",
+    url: "https://evolevex.com",
+    icon: <Dumbbell className="w-7 h-7 text-[#0A84FF]" />
+  },
+  {
+    name: "Vidya Infinity",
+    positioning: "Global education & career architecture",
+    tagline: "Global Education Architects",
+    offer: ["Study abroad", "Career planning", "Admissions strategy"],
+    cta: "Start Your Journey",
+    url: "https://vidyainfinity.com",
+    icon: <GraduationCap className="w-7 h-7 text-[#0A84FF]" />
+  },
+  {
+    name: "Infinity Growth Tech",
+    positioning: "Business infrastructure + execution",
+    tagline: "Architecting Business Growth",
+    offer: ["Business setup", "Tech systems", "Digital infrastructure"],
+    cta: "Build Your Business",
+    url: "https://infinitygrowthtech.com",
+    icon: <Building2 className="w-7 h-7 text-[#0A84FF]" />
+  },
+  {
+    name: "Brick Infinity",
+    positioning: "Real estate solutions",
+    tagline: "Find. Connect. Move.",
+    offer: ["Buying", "Selling", "Rentals"],
+    cta: "Explore Properties",
+    url: "https://brickinfinity.com",
+    icon: <Home className="w-7 h-7 text-[#0A84FF]" />
+  },
+  {
+    name: "Swift Fly Trips",
+    positioning: "Travel & experiences",
+    tagline: "Find Your Next Escape",
+    offer: ["Tours", "Visa assistance", "Holiday planning"],
+    cta: "Plan Your Trip",
+    url: "https://swiftflytrips.com",
+    icon: <Plane className="w-7 h-7 text-[#0A84FF]" />
+  },
+  {
+    name: "DaPear",
+    positioning: "Lifestyle + identity brand",
+    tagline: "Street. Casual. Essential.",
+    offer: ["Apparel", "Lifestyle identity"],
+    cta: "Shop Collection",
+    url: "https://dapear.com",
+    icon: <ShoppingBag className="w-7 h-7 text-[#0A84FF]" />
+  }
 ];

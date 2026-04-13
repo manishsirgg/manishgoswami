@@ -440,19 +440,39 @@ const App = () => {
              <span className="text-[#0A84FF] font-black tracking-[0.4em] uppercase text-xs">The Ecosystem</span>
              <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">Integrated <br /> Verticals</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {VENTURES.map((venture, i) => (
-              <motion.div 
-                whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }}
-                key={i} 
-                className="p-12 bg-black group transition-all"
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(10,132,255,0.25)' }}
+                key={venture.name}
+                href={venture.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-8 border border-white/10 bg-white/[0.01] hover:border-[#0A84FF]/70 hover:bg-white/[0.03] transition-all duration-500 rounded-sm flex flex-col min-h-[340px]"
               >
-                <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase group-hover:text-[#0A84FF] transition-colors">{venture.name}</h3>
-                <p className="text-white/40 text-lg mb-8 leading-relaxed font-light">{venture.description}</p>
-                <a href={venture.url} className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 text-[#0A84FF]">
-                  Visit Project <ExternalLink size={14} />
-                </a>
-              </motion.div>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="p-3 bg-[#0A84FF]/10 rounded-sm group-hover:bg-[#0A84FF]/20 transition-colors">{venture.icon}</span>
+                  <ExternalLink size={16} className="text-white/30 group-hover:text-[#0A84FF] transition-colors" />
+                </div>
+                <h3 className="text-2xl font-black mb-2 tracking-tighter uppercase group-hover:text-[#0A84FF] transition-colors">{venture.name}</h3>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#0A84FF] font-black mb-3">{venture.tagline}</p>
+                <p className="text-white/50 mb-6 leading-relaxed font-light">{venture.positioning}</p>
+                <ul className="space-y-2 mb-8 flex-grow">
+                  {venture.offer.map((item) => (
+                    <li key={item} className="text-sm text-white/70 uppercase tracking-wider font-bold flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <span className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-[#0A84FF]">
+                  {venture.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </motion.a>
             ))}
           </div>
         </div>

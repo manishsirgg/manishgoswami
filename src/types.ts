@@ -13,6 +13,10 @@ export interface PhilosophyItem {
 
 export interface Venture {
   name: string;
-  description: string;
+  positioning: string;
+  tagline: string;
+  offer: string[];
+  cta: string;
   url: string;
+  icon: React.ReactNode;
 }
