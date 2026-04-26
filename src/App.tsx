@@ -132,6 +132,14 @@ const blogPosts: BlogPost[] = [
 
 const categories: Array<'All' | BlogCategory> = ['All', 'Psychology', 'Business Strategy', 'Society & Systems', 'Power & Influence', 'Personal Growth'];
 
+const socialLinks: Array<{ label: string; href: string; icon: ReactNode }> = [
+  { label: 'YouTube', href: 'https://youtube.com/@manishsirg', icon: <Youtube size={15} /> },
+  { label: 'Instagram', href: 'https://instagram.com/@manishsirgg', icon: <Instagram size={15} /> },
+  { label: 'X', href: 'https://x.com/@manishsirg', icon: <X size={15} /> },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/manishsirg/', icon: <Linkedin size={15} /> },
+  { label: 'Facebook', href: 'https://www.facebook.com/manishsirg14', icon: <Facebook size={15} /> },
+];
+
 const pageMeta: Record<StaticPage, { title: string; description: string }> = {
   home: {
     title: 'Manish Goswami | Strategist, Entrepreneur, Coach & Consultant',
@@ -328,6 +336,20 @@ const App = () => {
                   {item.label}
                 </button>
               ))}
+              <div className="flex items-center gap-2">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={link.label}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/80 transition hover:border-[#66B2FF]/60 hover:bg-[#66B2FF]/10 hover:text-white"
+                  >
+                    {link.icon}
+                  </a>
+                ))}
+              </div>
               <Button onClick={() => navigateTo('work-with-me')} className="rounded-full px-5 py-2.5">Work With Me</Button>
             </div>
 
@@ -346,6 +368,20 @@ const App = () => {
                     {item.label}
                   </button>
                 ))}
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={`mobile-${link.label}`}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-[#66B2FF]/60 hover:bg-[#66B2FF]/10 hover:text-white"
+                      aria-label={link.label}
+                    >
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
                 <Button onClick={() => navigateTo('work-with-me')} className="mt-2">Work With Me</Button>
               </div>
             </div>
@@ -837,12 +873,13 @@ const Footer = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) => (
       ))}
     </div>
     <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-white/70">
-      <a href="https://youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />YouTube</a>
+      {socialLinks.map((link) => (
+        <a key={`footer-${link.label}`} href={link.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+          {link.icon}
+          {link.label}
+        </a>
+      ))}
       <a href="https://youtube.com/@mangopeptalks" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />Mango Pep Talks</a>
-      <a href="https://instagram.com/@manishsirgg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Instagram size={15} />Instagram</a>
-      <a href="https://x.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><X size={15} />X</a>
-      <a href="https://www.linkedin.com/in/manishsirg/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Linkedin size={15} />LinkedIn</a>
-      <a href="https://www.facebook.com/manishsirg14" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Facebook size={15} />Facebook</a>
     </div>
     <p className="mt-4 text-sm text-white/60">WhatsApp/Call: +918989601701 • Email: manishsirgg@gmail.com • Website: https://manishgoswami.com</p>
     <p className="mt-6 inline-flex items-center gap-2 text-sm text-white/60"><Gem size={14} className="text-[#8CC7FF]" />Founder of Infinity Global Advisory.</p>
