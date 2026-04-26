@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Dispatch, FormEvent, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   BookOpen,
@@ -6,13 +6,21 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   Compass,
+  Edit3,
   ExternalLink,
+  Facebook,
   Gem,
+  Image as ImageIcon,
+  Instagram,
   Layers3,
+  Link2,
+  Linkedin,
   Mail,
   Menu,
+  PenSquare,
   Phone,
   PlayCircle,
+  Save,
   Search,
   Sparkles,
   Target,
@@ -32,11 +40,17 @@ interface BlogPost {
   readTime: string;
   category: BlogCategory;
   content: string[];
+  bannerImage?: string;
+  inlineImage?: string;
+  affiliateLink?: string;
+  youtubeLink?: string;
+  status: 'draft' | 'published';
 }
 
 const SITE_URL = 'https://manishgoswami.com';
-const EMAIL = 'hello@manishgoswami.com';
-const WHATSAPP = '+91 89896 01701';
+const HERO_IMAGE = '/hero.png';
+const EMAIL = 'manishsirgg@gmail.com';
+const WHATSAPP = '+918989601701';
 
 const navItems: Array<{ label: string; page: StaticPage; path: string }> = [
   { label: 'Home', page: 'home', path: '/' },
@@ -59,6 +73,7 @@ const blogPosts: BlogPost[] = [
       'Clarity is not a motivational slogan. It is a practical operating system for better thinking, cleaner priorities, and stronger execution.',
       'If you want better outcomes, reduce mental noise first. Then design systems that keep momentum stable even when circumstances change.',
     ],
+    status: 'published',
   },
   {
     slug: 'strategic-positioning-for-founders',
@@ -72,6 +87,7 @@ const blogPosts: BlogPost[] = [
       'Strong positioning answers one critical question: Why you, and why now?',
       'When your message, offer, and execution standards align, trust compounds naturally across audiences and channels.',
     ],
+    status: 'published',
   },
   {
     slug: 'discipline-over-motivation',
@@ -85,6 +101,7 @@ const blogPosts: BlogPost[] = [
       'Discipline is not harshness. It is self-respect in action, repeated over time.',
       'The more your systems reduce decision fatigue, the more energy you preserve for meaningful execution.',
     ],
+    status: 'published',
   },
   {
     slug: 'power-behavior-and-modern-influence',
@@ -98,6 +115,7 @@ const blogPosts: BlogPost[] = [
       'If your public narrative and private standards are disconnected, influence erodes quickly.',
       'Real authority is built through coherent action: think clearly, communicate clearly, and execute consistently.',
     ],
+    status: 'published',
   },
   {
     slug: 'systems-shape-society',
@@ -111,6 +129,7 @@ const blogPosts: BlogPost[] = [
       'When incentives are misaligned, even talented individuals struggle to produce healthy outcomes.',
       'Better systems create better defaults. Better defaults create better long-term behavior.',
     ],
+    status: 'published',
   },
 ];
 
@@ -193,6 +212,10 @@ const sectionClass = 'mt-16 rounded-3xl border border-white/10 bg-[#0B111B]/75 p
 
 const App = () => {
   const initialRoute = inferRoute(window.location.pathname);
+  const [posts, setPosts] = useState<BlogPost[]>(() => {
+    const saved = localStorage.getItem('manish-blog-posts');
+    return saved ? (JSON.parse(saved) as BlogPost[]) : blogPosts;
+  });
   const [page, setPage] = useState<Page>(initialRoute.page);
   const [activeSlug, setActiveSlug] = useState<string | undefined>(initialRoute.slug);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -200,7 +223,12 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [visibleCount, setVisibleCount] = useState(4);
 
-  const activePost = useMemo(() => blogPosts.find((post) => post.slug === activeSlug) ?? blogPosts[0], [activeSlug]);
+  const activePost = useMemo(() => posts.find((post) => post.slug === activeSlug) ?? posts[0] ?? blogPosts[0], [activeSlug, posts]);
+  const publishedPosts = useMemo(() => posts.filter((post) => post.status === 'published'), [posts]);
+
+  useEffect(() => {
+    localStorage.setItem('manish-blog-posts', JSON.stringify(posts));
+  }, [posts]);
 
   useEffect(() => {
     const onPopState = () => {
@@ -229,7 +257,7 @@ const App = () => {
     const ogTitle = page === 'home' ? 'Manish Goswami | Build Smarter. Think Deeper. Win Bigger.' : meta.title;
     const ogDescription =
       page === 'home'
-        ? 'Personal brand platform of Manish Goswami — strategist, entrepreneur, coach, consultant, and author.'
+        ? 'Clarity, Strategy, Impact. Personal brand of Manish Goswami — strategist, entrepreneur, coach, consultant, and author.'
         : meta.description;
     setMetaTag('meta[property="og:title"]', 'content', ogTitle);
     setMetaTag('meta[property="og:description"]', 'content', ogDescription);
@@ -271,12 +299,12 @@ const App = () => {
   };
 
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter((post) => {
+    return publishedPosts.filter((post) => {
       const categoryMatch = selectedCategory === 'All' || post.category === selectedCategory;
       const searchMatch = `${post.title} ${post.excerpt}`.toLowerCase().includes(search.toLowerCase().trim());
       return categoryMatch && searchMatch;
     });
-  }, [search, selectedCategory]);
+  }, [publishedPosts, search, selectedCategory]);
 
   useEffect(() => setVisibleCount(4), [selectedCategory, search]);
 
@@ -295,7 +323,7 @@ const App = () => {
           <nav className="flex min-h-20 items-center justify-between py-4">
             <button onClick={() => navigateTo('home')} className="text-left">
               <p className="text-lg font-semibold tracking-wide">Manish Goswami</p>
-              <p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Personal Brand Platform</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Clarity, Strategy, Impact.</p>
             </button>
 
             <div className="hidden items-center gap-8 lg:flex">
@@ -339,7 +367,9 @@ const App = () => {
 
           {page === 'insights' ? (
             <InsightsPage
-              posts={blogPosts}
+              posts={publishedPosts}
+              allPosts={posts}
+              setPosts={setPosts}
               categories={categories}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -370,7 +400,7 @@ const App = () => {
 
 const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slug?: string) => void; onSubmit: (event: FormEvent<HTMLFormElement>, message: string) => void }) => (
   <>
-    <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.2)] lg:grid-cols-2 lg:p-12">
+    <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.2)] lg:grid-cols-[1.15fr_0.85fr] lg:p-12">
       <div className="absolute -right-20 top-16 h-64 w-64 rounded-full bg-[#2d87ff]/20 blur-3xl" />
       <div>
         <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Personal Brand of Manish Goswami</p>
@@ -392,20 +422,8 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
           Strategist. Entrepreneur. Architect of High-Performance Systems.
         </div>
       </div>
-      <div className="relative rounded-3xl border border-[#66B2FF]/25 bg-gradient-to-br from-[#131e35] via-[#0d1424] to-[#090d16] p-8">
-        <div className="absolute inset-0 rounded-3xl shadow-[inset_0_0_80px_rgba(52,130,255,0.2)]" />
-        <div className="relative">
-          <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Authority Profile</p>
-          <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <p className="text-xl leading-relaxed text-white/90">A premium personal platform built to share strategic thinking, deeper insights, and execution frameworks for modern high-performers.</p>
-            <div className="mt-8 grid grid-cols-2 gap-3 text-sm text-white/80">
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Strategy</div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Psychology</div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Systems</div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Execution</div>
-            </div>
-          </div>
-        </div>
+      <div className="relative rounded-3xl border border-[#66B2FF]/25 bg-[#070C14] p-3">
+        <img src={HERO_IMAGE} alt="Manish Goswami speaking on stage" className="h-full max-h-[620px] w-full rounded-[1.25rem] object-cover" />
       </div>
     </section>
 
@@ -593,8 +611,10 @@ const AboutPage = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) =
   </section>
 );
 
-const InsightsPage = ({ posts, categories, selectedCategory, setSelectedCategory, search, setSearch, visiblePosts, visibleCount, total, onLoadMore, openArticle }: {
+const InsightsPage = ({ posts, allPosts, setPosts, categories, selectedCategory, setSelectedCategory, search, setSearch, visiblePosts, visibleCount, total, onLoadMore, openArticle }: {
   posts: BlogPost[];
+  allPosts: BlogPost[];
+  setPosts: Dispatch<SetStateAction<BlogPost[]>>;
   categories: Array<'All' | BlogCategory>;
   selectedCategory: 'All' | BlogCategory;
   setSelectedCategory: (value: 'All' | BlogCategory) => void;
@@ -607,6 +627,67 @@ const InsightsPage = ({ posts, categories, selectedCategory, setSelectedCategory
   openArticle: (slug: string) => void;
 }) => {
   const featured = posts[0];
+  const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  const [editor, setEditor] = useState({
+    title: '',
+    excerpt: '',
+    category: 'Psychology' as BlogCategory,
+    content: '',
+    bannerImage: '',
+    inlineImage: '',
+    affiliateLink: '',
+    youtubeLink: '',
+    status: 'draft' as 'draft' | 'published',
+  });
+
+  const resetEditor = () => {
+    setEditingSlug(null);
+    setEditor({ title: '', excerpt: '', category: 'Psychology', content: '', bannerImage: '', inlineImage: '', affiliateLink: '', youtubeLink: '', status: 'draft' });
+  };
+
+  const createOrUpdateBlog = (mode: 'draft' | 'published') => {
+    const slug = (editingSlug ?? editor.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')) || `post-${Date.now()}`;
+    const payload: BlogPost = {
+      slug,
+      title: editor.title,
+      excerpt: editor.excerpt,
+      category: editor.category,
+      content: editor.content.split('\n').map((line) => line.trim()).filter(Boolean),
+      date: new Date().toISOString().slice(0, 10),
+      readTime: `${Math.max(3, Math.ceil(editor.content.split(' ').filter(Boolean).length / 180))} min read`,
+      bannerImage: editor.bannerImage.trim(),
+      inlineImage: editor.inlineImage.trim(),
+      affiliateLink: editor.affiliateLink.trim(),
+      youtubeLink: editor.youtubeLink.trim(),
+      status: mode,
+    };
+    setPosts((prev) => {
+      const existing = prev.find((post) => post.slug === slug);
+      if (existing) return prev.map((post) => (post.slug === slug ? payload : post));
+      return [payload, ...prev];
+    });
+    resetEditor();
+  };
+
+  const submitBlog = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    createOrUpdateBlog('published');
+  };
+
+  const editPost = (post: BlogPost) => {
+    setEditingSlug(post.slug);
+    setEditor({
+      title: post.title,
+      excerpt: post.excerpt,
+      category: post.category,
+      content: post.content.join('\n'),
+      bannerImage: post.bannerImage ?? '',
+      inlineImage: post.inlineImage ?? '',
+      affiliateLink: post.affiliateLink ?? '',
+      youtubeLink: post.youtubeLink ?? '',
+      status: post.status,
+    });
+  };
 
   return (
     <section className={sectionClass}>
@@ -614,12 +695,44 @@ const InsightsPage = ({ posts, categories, selectedCategory, setSelectedCategory
       <p className="mt-4 text-xl text-white/75">Ideas on psychology, business, power, discipline, society, and growth.</p>
       <p className="mt-4 max-w-4xl text-white/70">This is where thinking becomes structured. Here, you’ll find deeper breakdowns of ideas, behaviors, systems, and strategies—designed to help you see clearly and act intelligently.</p>
 
-      <article className="mt-10 rounded-2xl border border-white/10 bg-[#0D121D] p-7">
+      <article className="mt-10 rounded-2xl border border-[#66B2FF]/30 bg-[#0B1320] p-7">
+        <p className="text-xs uppercase tracking-[0.2em] text-[#A8D4FF]">Blog Studio</p>
+        <h2 className="mt-3 text-2xl font-semibold">Write, Edit & Post Blogs</h2>
+        <p className="mt-2 text-white/70">Create drafts or publish with banner image, inline image, affiliate links, and YouTube links.</p>
+        <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={submitBlog}>
+          <input required value={editor.title} onChange={(event) => setEditor((prev) => ({ ...prev, title: event.target.value }))} placeholder="Blog title" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
+          <input required value={editor.excerpt} onChange={(event) => setEditor((prev) => ({ ...prev, excerpt: event.target.value }))} placeholder="Short excerpt" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
+          <select value={editor.category} onChange={(event) => setEditor((prev) => ({ ...prev, category: event.target.value as BlogCategory }))} className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4">
+            {categories.filter((item) => item !== 'All').map((item) => <option key={item}>{item}</option>)}
+          </select>
+          <input value={editor.bannerImage} onChange={(event) => setEditor((prev) => ({ ...prev, bannerImage: event.target.value }))} placeholder="Banner image URL" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
+          <input value={editor.inlineImage} onChange={(event) => setEditor((prev) => ({ ...prev, inlineImage: event.target.value }))} placeholder="Content image URL" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
+          <input value={editor.affiliateLink} onChange={(event) => setEditor((prev) => ({ ...prev, affiliateLink: event.target.value }))} placeholder="Affiliate link" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
+          <input value={editor.youtubeLink} onChange={(event) => setEditor((prev) => ({ ...prev, youtubeLink: event.target.value }))} placeholder="YouTube video link" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
+          <textarea required rows={6} value={editor.content} onChange={(event) => setEditor((prev) => ({ ...prev, content: event.target.value }))} placeholder="Write your blog content (new line = new paragraph)" className="rounded-xl border border-white/15 bg-[#08101A] p-4 sm:col-span-2" />
+          <div className="flex flex-wrap gap-3 sm:col-span-2">
+            <button type="button" onClick={() => createOrUpdateBlog('draft')} className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-2.5 text-sm font-semibold"><Save size={14} />Save Draft</button>
+            <button className="inline-flex items-center gap-2 rounded-xl bg-[#4DA3FF] px-5 py-2.5 text-sm font-semibold text-[#061325]"><PenSquare size={14} />{editingSlug ? 'Update & Post' : 'Post Blog'}</button>
+            {editingSlug ? <button type="button" onClick={resetEditor} className="rounded-xl border border-white/20 px-5 py-2.5 text-sm">Cancel Edit</button> : null}
+          </div>
+        </form>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {allPosts.slice(0, 6).map((post) => (
+            <div key={post.slug} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <p className="text-sm font-semibold">{post.title}</p>
+              <p className="mt-1 text-xs text-white/60">{post.status.toUpperCase()}</p>
+              <button onClick={() => editPost(post)} className="mt-3 inline-flex items-center gap-1 text-xs text-[#8CC7FF]"><Edit3 size={12} />Edit</button>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      {featured ? <article className="mt-10 rounded-2xl border border-white/10 bg-[#0D121D] p-7">
         <span className="text-xs uppercase tracking-[0.2em] text-[#A8D4FF]">Featured Article</span>
         <h2 className="mt-3 text-2xl font-semibold">{featured.title}</h2>
         <p className="mt-3 text-white/70">{featured.excerpt}</p>
         <button onClick={() => openArticle(featured.slug)} className="mt-5 inline-flex items-center gap-2 text-sm text-[#8CC7FF]">Read More <ArrowRight size={15} /></button>
-      </article>
+      </article> : null}
 
       <div className="mt-8 flex flex-col gap-4">
         <label className="relative block">
@@ -638,10 +751,16 @@ const InsightsPage = ({ posts, categories, selectedCategory, setSelectedCategory
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         {visiblePosts.map((post) => (
           <article key={post.slug} className="rounded-2xl border border-white/10 bg-[#0C111A] p-6">
+            {post.bannerImage ? <img src={post.bannerImage} alt={post.title} className="mb-4 h-44 w-full rounded-xl object-cover" /> : null}
             <span className="rounded-full border border-[#66B2FF]/40 px-3 py-1 text-xs text-[#A8D4FF]">{post.category}</span>
             <h3 className="mt-4 text-xl font-semibold">{post.title}</h3>
             <p className="mt-2 text-sm text-white/70">{post.excerpt}</p>
             <div className="mt-4 flex items-center gap-4 text-xs text-white/50"><span className="inline-flex items-center gap-1"><CalendarDays size={13} />{formatDate(post.date)}</span><span>{post.readTime}</span></div>
+            <div className="mt-4 flex flex-wrap gap-3 text-xs text-[#9fd1ff]">
+              {post.inlineImage ? <span className="inline-flex items-center gap-1"><ImageIcon size={12} />Image</span> : null}
+              {post.affiliateLink ? <a href={post.affiliateLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-white"><Link2 size={12} />Affiliate</a> : null}
+              {post.youtubeLink ? <a href={post.youtubeLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-white"><Youtube size={12} />Video</a> : null}
+            </div>
             <button onClick={() => openArticle(post.slug)} className="mt-5 inline-flex items-center gap-2 text-sm text-[#8CC7FF]">Read More <ArrowRight size={15} /></button>
           </article>
         ))}
@@ -657,10 +776,16 @@ const InsightDetailPage = ({ post, navigateTo, onSubmit }: { post: BlogPost; nav
     <button onClick={() => navigateTo('insights')} className="text-sm text-[#8CC7FF]">← Back to Insights</button>
     <h1 className="mt-4 text-4xl font-semibold md:text-5xl">{post.title}</h1>
     <div className="mt-4 flex items-center gap-4 text-sm text-white/60"><span>{post.category}</span><span>•</span><span>{formatDate(post.date)}</span><span>•</span><span>{post.readTime}</span></div>
+    {post.bannerImage ? <img src={post.bannerImage} alt={post.title} className="mt-7 h-72 w-full rounded-2xl object-cover" /> : null}
     <div className="mt-8 space-y-5 text-lg leading-9 text-white/80">
       {post.content.map((paragraph) => (
         <p key={paragraph}>{paragraph}</p>
       ))}
+    </div>
+    {post.inlineImage ? <img src={post.inlineImage} alt={`${post.title} visual`} className="mt-8 w-full rounded-2xl object-cover" /> : null}
+    <div className="mt-6 flex flex-wrap gap-4 text-sm text-[#9fd1ff]">
+      {post.affiliateLink ? <a href={post.affiliateLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Link2 size={14} />Affiliate resource</a> : null}
+      {post.youtubeLink ? <a href={post.youtubeLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={14} />Watch related video</a> : null}
     </div>
 
     <section className="mt-12 rounded-2xl border border-white/10 bg-[#0A111D] p-7">
@@ -762,11 +887,16 @@ const ContactPage = ({ onSubmit }: { onSubmit: (event: FormEvent<HTMLFormElement
     <div className="mt-8 grid gap-4 sm:grid-cols-2">
       {[
         ['Email', EMAIL, <Mail size={16} key="mail" />],
-        ['WhatsApp', WHATSAPP, <Phone size={16} key="phone" />],
-        ['YouTube', '@manishsirg', <Youtube size={16} key="yt" />],
-        ['Website', 'infinityglobaladvisory.com', <ExternalLink size={16} key="web" />],
+        ['WhatsApp / Call', WHATSAPP, <Phone size={16} key="phone" />],
+        ['Website', 'https://manishgoswami.com', <ExternalLink size={16} key="web" />],
+        ['YouTube', 'youtube.com/@manishsirg', <Youtube size={16} key="yt1" />],
+        ['YouTube', 'youtube.com/@mangopeptalks', <Youtube size={16} key="yt2" />],
+        ['Instagram', 'instagram.com/@manishsirgg', <Instagram size={16} key="ig" />],
+        ['X', 'x.com/@manishsirg', <X size={16} key="x" />],
+        ['LinkedIn', 'linkedin.com/in/manishsirg', <Linkedin size={16} key="li" />],
+        ['Facebook', 'facebook.com/manishsirg14', <Facebook size={16} key="fb" />],
       ].map(([title, value, icon]) => (
-        <div key={title as string} className="rounded-xl border border-white/10 bg-[#0B111A] p-5">
+        <div key={`${title as string}-${value as string}`} className="rounded-xl border border-white/10 bg-[#0B111A] p-5">
           <p className="text-xs uppercase tracking-[0.2em] text-white/50">{title}</p>
           <p className="mt-2 inline-flex items-center gap-2 text-white/90">{icon}{value}</p>
         </div>
@@ -793,9 +923,14 @@ const Footer = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) => (
       ))}
     </div>
     <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-white/70">
-      <a href="https://www.youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />@manishsirg</a>
-      <a href="https://www.youtube.com/@mangopeptalks" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />@mangopeptalks</a>
+      <a href="https://youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />YouTube</a>
+      <a href="https://youtube.com/@mangopeptalks" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />Mango Pep Talks</a>
+      <a href="https://instagram.com/@manishsirgg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Instagram size={15} />Instagram</a>
+      <a href="https://x.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><X size={15} />X</a>
+      <a href="https://www.linkedin.com/in/manishsirg/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Linkedin size={15} />LinkedIn</a>
+      <a href="https://www.facebook.com/manishsirg14" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Facebook size={15} />Facebook</a>
     </div>
+    <p className="mt-4 text-sm text-white/60">WhatsApp/Call: +918989601701 • Email: manishsirgg@gmail.com • Website: https://manishgoswami.com</p>
     <p className="mt-6 inline-flex items-center gap-2 text-sm text-white/60"><Gem size={14} className="text-[#8CC7FF]" />Founder of Infinity Global Advisory.</p>
   </footer>
 );
