@@ -1,638 +1,565 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Menu, X, ArrowRight, ExternalLink, Mail, Phone, MessageSquare, Send,
-  Linkedin, Youtube, Instagram, Music, ChevronRight, Sparkles,
-  BookOpen, Code, Lightbulb, Users
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  BRAND_NAME, 
-  BRAND_TITLE, 
-  SERVICE_PILLARS, 
-  PHILOSOPHY, 
-  VENTURES, 
-  CONTACT_EMAIL,
-  CONTACT_PHONE
-} from './constants';
-import heroImage from './assets/hero.png';
-import logo from './assets/logo.png';
-import favIcon from './assets/favicon.ico';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { ArrowRight, CalendarDays, ExternalLink, Menu, X } from 'lucide-react';
 
-const XIcon = ({ size = 18 }: { size?: number }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="currentColor" 
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153zM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644z" />
-  </svg>
-);
+type Page = 'home' | 'about' | 'insights' | 'work-with-me' | 'contact';
 
-const SOCIAL_LINKS = [
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/manishsirg', icon: <Linkedin size={18} /> },
-  { name: 'X', href: 'https://x.com/manishsirg', icon: <XIcon size={18} /> },
-  { name: 'YouTube', href: 'https://youtube.com/@manishsirg', icon: <Youtube size={18} /> },
-  { name: 'Instagram', href: 'https://instagram.com/manishsirgg', icon: <Instagram size={18} /> },
-  { name: 'Spotify', href: 'https://creators.spotify.com/pod/show/manishsirg', icon: <Music size={18} /> },
+type BlogCategory =
+  | 'Psychology'
+  | 'Business Strategy'
+  | 'Power & Influence'
+  | 'Society & Systems'
+  | 'Personal Growth';
+
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: BlogCategory;
+}
+
+const SITE_URL = 'https://manishgoswami.com';
+const EMAIL = 'hello@manishgoswami.com';
+
+const pages: Array<{ label: string; path: `/${string}`; page: Page }> = [
+  { label: 'Home', path: '/', page: 'home' },
+  { label: 'About', path: '/about', page: 'about' },
+  { label: 'Insights', path: '/insights', page: 'insights' },
+  { label: 'Work With Me', path: '/work-with-me', page: 'work-with-me' },
+  { label: 'Contact', path: '/contact', page: 'contact' },
 ];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+const identityStack = [
+  {
+    role: 'Strategist',
+    description: 'Designs decision frameworks that convert complexity into decisive execution.',
+  },
+  {
+    role: 'Entrepreneur',
+    description: 'Builds scalable ventures by compounding systems, leverage, and disciplined focus.',
+  },
+  {
+    role: 'Coach',
+    description: 'Develops high-performance thinking for leaders facing pressure, growth, and transition.',
+  },
+  {
+    role: 'Consultant',
+    description: 'Advises founders and operators on clarity, positioning, and strategic momentum.',
+  },
+  {
+    role: 'Author',
+    description: 'Writes on psychology, power, systems, and the architecture of modern influence.',
+  },
+];
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+const featuredPosts: BlogPost[] = [
+  {
+    slug: 'the-clarity-loop',
+    title: 'The Clarity Loop: Why Most Ambition Dies in Noise',
+    excerpt: 'A practical model for reducing cognitive drag and making better strategic decisions every week.',
+    date: '2026-03-22',
+    readTime: '7 min read',
+    category: 'Psychology',
+  },
+  {
+    slug: 'positioning-without-posturing',
+    title: 'Positioning Without Posturing',
+    excerpt: 'Authority is not performance. It is consistency between what you think, build, and ship.',
+    date: '2026-03-07',
+    readTime: '6 min read',
+    category: 'Power & Influence',
+  },
+  {
+    slug: 'strategy-as-a-system',
+    title: 'Strategy Is a System, Not a Deck',
+    excerpt: 'How elite operators design strategic engines that survive uncertainty and scale intelligently.',
+    date: '2026-02-16',
+    readTime: '9 min read',
+    category: 'Business Strategy',
+  },
+  {
+    slug: 'status-games-and-modern-work',
+    title: 'Status Games and Modern Work',
+    excerpt: 'A lens for understanding institutions, incentives, and why talent often underperforms structure.',
+    date: '2026-01-29',
+    readTime: '8 min read',
+    category: 'Society & Systems',
+  },
+  {
+    slug: 'identity-before-output',
+    title: 'Identity Before Output',
+    excerpt: 'Sustainable performance begins with a personal operating system—not motivation spikes.',
+    date: '2026-01-05',
+    readTime: '5 min read',
+    category: 'Personal Growth',
+  },
+];
 
-  const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Framework', href: '#framework' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
-  return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <motion.a 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          href="#" 
-          className="flex items-center gap-3 group"
-        >
-          <div className="w-10 h-10 bg-white flex items-center justify-center overflow-hidden relative">
-             <img src={logo} alt="MG Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => {
-               e.currentTarget.style.display = 'none';
-               e.currentTarget.parentElement!.innerHTML = '<span class="text-black font-bold text-xl">MG</span>';
-             }} />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tighter uppercase leading-none">Manish Sir G</span>
-            <span className="text-[8px] tracking-[0.3em] uppercase text-[#0A84FF] font-black">Strategic Architect</span>
-          </div>
-        </motion.a>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex items-center gap-8">
-            {navLinks.map((link, i) => (
-              <motion.a 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                key={link.name} 
-                href={link.href} 
-                className="text-[10px] font-bold hover:text-[#0A84FF] transition-colors uppercase tracking-[0.2em] text-white/60 relative group"
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#0A84FF] transition-all duration-300 group-hover:w-full"></span>
-              </motion.a>
-            ))}
-          </div>
-          
-          <div className="h-4 w-px bg-white/10 mx-2"></div>
-          
-          <div className="flex items-center gap-4">
-            {SOCIAL_LINKS.map((social, i) => (
-              <motion.a 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                key={social.name} 
-                href={social.href} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white/30 hover:text-[#0A84FF] transition-all transform hover:scale-110"
-                aria-label={social.name}
-              >
-                {social.icon}
-              </motion.a>
-            ))}
-          </div>
-
-          <motion.a 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 }}
-            href="#contact" 
-            className="bg-[#0A84FF] text-white px-6 py-2.5 text-[10px] font-black rounded-sm hover:bg-[#0070E0] transition-all uppercase tracking-[0.2em] ml-4 shadow-[0_0_20px_rgba(10,132,255,0.3)]"
-          >
-            Book Session
-          </motion.a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2">
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-black fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 p-6"
-          >
-            <div className="flex flex-col items-center gap-8">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  onClick={() => setIsOpen(false)}
-                  className="text-3xl font-black hover:text-[#0A84FF] transition-colors uppercase tracking-widest"
-                >
-                  {link.name}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-8 py-8">
-              {SOCIAL_LINKS.map((social) => (
-                <a 
-                  key={social.name} 
-                  href={social.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white/40 hover:text-[#0A84FF] transition-all scale-125"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-
-            <a 
-              href="#contact" 
-              onClick={() => setIsOpen(false)}
-              className="w-full max-w-xs bg-[#0A84FF] text-white text-center py-5 text-lg font-black rounded-sm uppercase tracking-[0.2em] mt-4"
-            >
-              Book Session
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
+const pageMeta: Record<Page, { title: string; description: string }> = {
+  home: {
+    title: 'Manish Goswami — Strategist. Entrepreneur. Architect of High-Performance Systems.',
+    description:
+      'Personal authority platform of Manish Goswami focused on strategy, psychology, systems, and high-performance execution.',
+  },
+  about: {
+    title: 'About | Manish Goswami',
+    description:
+      'Read the philosophy, journey, and mission of Manish Goswami—strategist, entrepreneur, and systems architect.',
+  },
+  insights: {
+    title: 'Insights | Manish Goswami',
+    description:
+      'Essays on psychology, business strategy, power, systems, and personal growth.',
+  },
+  'work-with-me': {
+    title: 'Work With Me | Manish Goswami',
+    description:
+      'Consulting, mentorship, strategic advisory, and speaking engagements for leaders and organizations.',
+  },
+  contact: {
+    title: 'Contact | Manish Goswami',
+    description: 'Get in touch for strategic advisory, speaking requests, mentorship, and partnerships.',
+  },
 };
 
-const App = () => {
+const inferPageFromPath = (path: string): Page => {
+  const found = pages.find((item) => item.path === path);
+  return found?.page ?? 'home';
+};
 
-  {/* FORM STATE */}
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+const toPath = (page: Page) => pages.find((item) => item.page === page)?.path ?? '/';
+
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
 
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+const BlogCard = ({ post }: { post: BlogPost }) => (
+  <article className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
+    <p className="text-xs uppercase tracking-[0.24em] text-[#4DA3FF]">{post.category}</p>
+    <h3 className="mt-4 text-xl font-semibold leading-tight text-white">{post.title}</h3>
+    <p className="mt-3 text-sm leading-7 text-white/70">{post.excerpt}</p>
+    <div className="mt-6 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/50">
+      <span className="flex items-center gap-2">
+        <CalendarDays size={14} />
+        {formatDate(post.date)}
+      </span>
+      <span>{post.readTime}</span>
+    </div>
+  </article>
+);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+const SectionTitle = ({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) => (
+  <div className="max-w-3xl">
+    <p className="text-xs uppercase tracking-[0.3em] text-[#4DA3FF]">{eyebrow}</p>
+    <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">{title}</h2>
+    {body ? <p className="mt-5 text-base leading-8 text-white/70">{body}</p> : null}
+  </div>
+);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('sending');
+function App() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<Page>(() => inferPageFromPath(window.location.pathname));
 
-    try {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+  useEffect(() => {
+    const handlePop = () => setCurrentPage(inferPageFromPath(window.location.pathname));
+    window.addEventListener('popstate', handlePop);
+    return () => window.removeEventListener('popstate', handlePop);
+  }, []);
 
-      if (res.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setStatus('error');
+  useEffect(() => {
+    const meta = pageMeta[currentPage];
+    document.title = meta.title;
+
+    const updateMetaTag = (name: string, content: string, property = false) => {
+      const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let tag = document.querySelector(selector) as HTMLMetaElement | null;
+      if (!tag) {
+        tag = document.createElement('meta');
+        if (property) tag.setAttribute('property', name);
+        else tag.name = name;
+        document.head.appendChild(tag);
       }
-    } catch {
-      setStatus('error');
-    }
+      tag.content = content;
+    };
+
+    updateMetaTag('description', meta.description);
+    updateMetaTag('og:title', meta.title, true);
+    updateMetaTag('og:description', meta.description, true);
+    updateMetaTag('og:type', currentPage === 'insights' ? 'website' : 'profile', true);
+    updateMetaTag('og:url', `${SITE_URL}${toPath(currentPage)}`, true);
+  }, [currentPage]);
+
+  const articleSchema = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: featuredPosts.map((post, index) => ({
+        '@type': 'Article',
+        position: index + 1,
+        headline: post.title,
+        description: post.excerpt,
+        datePublished: post.date,
+        articleSection: post.category,
+        url: `${SITE_URL}/insights/${post.slug}`,
+        author: {
+          '@type': 'Person',
+          name: 'Manish Goswami',
+        },
+      })),
+    }),
+    [],
+  );
+
+  const navigate = (page: Page) => {
+    const path = toPath(page);
+    window.history.pushState({}, '', path);
+    setCurrentPage(page);
+    setMobileOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen gradient-mesh selection:bg-[#0A84FF] selection:text-white">
-      <Navbar />
-
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-[radial-gradient(circle,rgba(10,132,255,0.15)_0%,transparent_70%)]" />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-        </div>
-        
-        <div className="max-w-7xl mx-auto w-full relative z-10 grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-10"
-          >
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 border border-white/10 text-[#0A84FF] text-[10px] font-black tracking-[0.3em] uppercase rounded-full">
-              <Sparkles size={12} className="animate-pulse" />
-              Strategic Growth Architect
-            </div>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter uppercase">
-              Clarity <br />
-              <span className="text-[#0A84FF]">Identity</span> <br />
-              <span className="text-white/20">Impact</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-white/50 max-w-xl font-light leading-relaxed text-balance">
-              {BRAND_TITLE}. Helping leaders dismantle confusion to rebuild their businesses and identities with discipline and precision.
+    <div className="min-h-screen bg-[#030406] text-white selection:bg-[#0A84FF] selection:text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <button className="text-left" onClick={() => navigate('home')}>
+            <p className="text-sm uppercase tracking-[0.28em] text-[#4DA3FF]">Manish Goswami</p>
+            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-white/60">
+              Strategist. Entrepreneur. Systems Architect.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 pt-6">
-              <motion.a 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="#contact" 
-                className="group flex items-center justify-center gap-3 bg-[#0A84FF] text-white px-10 py-5 font-black rounded-sm hover:bg-[#0070E0] transition-all shadow-[0_20px_40px_rgba(10,132,255,0.2)] uppercase tracking-[0.2em] text-xs"
-              >
-                Initiate Strategy
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="hidden lg:block relative"
-          >
-            <div className="relative aspect-[4/5] max-w-md mx-auto grayscale hover:grayscale-0 transition-all duration-1000 group">
-               <div className="absolute inset-0 border-2 border-[#0A84FF]/30 -translate-x-6 translate-y-6 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700"></div>
-               <img 
-                 src={heroImage} 
-                 alt="Manish Goswami" 
-                 className="w-full h-full object-cover rounded-sm relative z-10 border border-white/10"
-                 referrerPolicy="no-referrer"
-               />
-               <div className="absolute -bottom-10 -left-10 z-20 w-64 p-8 bg-[#0A84FF] text-white font-black leading-none uppercase tracking-tighter text-4xl shadow-2xl">
-                 Manish <br /> Goswami
-               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          </button>
 
-      {/* About Section */}
-      <section id="about" className="py-40 px-6 bg-white text-black relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent opacity-5" />
-        <div className="max-w-5xl mx-auto space-y-20">
-          <div className="grid lg:grid-cols-2 gap-20 items-start">
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-               <span className="text-[#0A84FF] font-black tracking-[0.4em] uppercase text-xs">The Philosophy</span>
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
-                 Systems <br />
-                 Always <br />
-                 Beat <br />
-                 <span className="text-[#0A84FF]">Trends</span>
-               </h2>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-xl md:text-2xl leading-relaxed font-light space-y-8 text-black/70"
-            >
-              <p>
-                As a <span className="font-bold text-black">Life Coach, Education Consultant, and Business Consultant</span>, my journey has been defined by one core realization: clarity is the ultimate competitive advantage.
+          <nav className="hidden items-center gap-8 md:flex">
+            {pages.map((item) => (
+              <button
+                key={item.page}
+                className={`text-xs uppercase tracking-[0.2em] transition ${
+                  currentPage === item.page ? 'text-white' : 'text-white/60 hover:text-white'
+                }`}
+                onClick={() => navigate(item.page)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <button className="md:hidden" onClick={() => setMobileOpen((prev) => !prev)} aria-label="Toggle navigation">
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+
+        {mobileOpen ? (
+          <div className="border-t border-white/10 bg-black px-6 py-4 md:hidden">
+            <div className="grid gap-4">
+              {pages.map((item) => (
+                <button
+                  key={item.page}
+                  className="text-left text-xs uppercase tracking-[0.2em] text-white/80"
+                  onClick={() => navigate(item.page)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </header>
+
+      <main className="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        {currentPage === 'home' ? (
+          <>
+            <section className="border-b border-white/10 pb-20 md:pb-28">
+              <p className="text-xs uppercase tracking-[0.3em] text-[#4DA3FF]">Personal Authority Platform</p>
+              <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-tight md:text-7xl">
+                Build Smarter. Think Deeper. Win Bigger.
+              </h1>
+              <p className="mt-8 max-w-3xl text-lg leading-8 text-white/75">
+                I help individuals and businesses unlock clarity, strategy, and execution power.
               </p>
-              <p>
-                While the market chases fleeting tactics, I've spent my career building institutional-grade structures that stand the test of time. I help leaders dismantle confusion to rebuild their businesses and identities with discipline and precision.
-              </p>
-              <div className="pt-8 flex gap-12">
-                {[
-                  { label: 'Growth', value: '10x+' },
-                  { label: 'Ventures', value: '04+' },
-                  { label: 'Consulting', value: '500+' }
-                ].map((stat, i) => (
-                  <div key={i} className="space-y-1">
-                    <div className="text-4xl font-black text-black tracking-tighter">{stat.value}</div>
-                    <div className="text-[10px] uppercase tracking-widest font-black text-[#0A84FF]">{stat.label}</div>
+              <div className="mt-12 flex flex-wrap gap-4">
+                <button
+                  onClick={() => navigate('work-with-me')}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#0A84FF] px-6 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-white"
+                >
+                  Work With Me <ArrowRight size={16} />
+                </button>
+                <button
+                  onClick={() => navigate('insights')}
+                  className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-white/90"
+                >
+                  Explore Insights
+                </button>
+              </div>
+            </section>
+
+            <section className="border-b border-white/10 py-20 md:py-24">
+              <SectionTitle
+                eyebrow="Identity Stack"
+                title="Designed for leverage, built for consequence."
+                body="This platform is intentionally focused on one thing: creating strategic advantage for people and organizations operating in high-stakes environments."
+              />
+              <div className="mt-12 grid gap-5 md:grid-cols-2">
+                {identityStack.map((item) => (
+                  <div key={item.role} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                    <h3 className="text-lg font-semibold">{item.role}</h3>
+                    <p className="mt-3 text-sm leading-7 text-white/70">{item.description}</p>
                   </div>
                 ))}
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+            </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-40 px-6 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-32 gap-12">
-            <div className="space-y-6">
-              <span className="text-[#0A84FF] font-black tracking-[0.4em] uppercase text-xs">Strategic Verticals</span>
-              <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">Structural <br /> Advancement</h2>
-            </div>
-            <p className="text-white/30 max-w-sm text-xl font-light italic leading-relaxed">
-              Specialized systems designed for comprehensive personal, educational, and technological dominance.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-12">
-            {SERVICE_PILLARS.map((pillar, i) => (
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                key={i} 
-                className="group p-12 border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-[#0A84FF]/40 transition-all duration-700 rounded-sm flex flex-col h-full relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <span className="text-9xl font-black tracking-tighter">{i + 1}</span>
-                </div>
-                <div className="mb-12 p-5 bg-[#0A84FF]/10 inline-block rounded-sm group-hover:bg-[#0A84FF] group-hover:text-white transition-all duration-500 text-[#0A84FF]">
-                  {pillar.icon}
-                </div>
-                <h3 className="text-3xl font-black mb-6 uppercase tracking-tighter leading-none">{pillar.title}</h3>
-                <p className="text-white/50 mb-10 leading-relaxed font-light text-lg">{pillar.description}</p>
-                <ul className="space-y-4 mb-12 flex-grow">
-                  {pillar.features.map((feat, j) => (
-                    <li key={j} className="flex items-center gap-4 text-sm text-white/70 font-bold uppercase tracking-widest">
-                      <ChevronRight size={14} className="text-[#0A84FF]" />
-                      {feat}
-                    </li>
-                  ))}
-                </ul>
-                <motion.a 
-                  whileHover={{ x: 5 }}
-                  href="#contact" 
-                  className="flex items-center justify-between w-full py-5 px-8 border border-white/10 hover:border-[#0A84FF] hover:bg-[#0A84FF] text-white transition-all uppercase tracking-[0.3em] text-[10px] font-black"
+            <section className="border-b border-white/10 py-20 md:py-24">
+              <SectionTitle
+                eyebrow="Authority"
+                title="Founder of Infinity Global Advisory"
+                body="A strategic ecosystem focused on execution infrastructure across consulting, growth systems, and enterprise acceleration."
+              />
+              <div className="mt-10 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/65">
+                {['Infinity Global Advisory', 'Infinity Growth Tech', 'Vidya Infinity', 'EvoLeveX'].map((item) => (
+                  <span key={item} className="rounded-full border border-white/15 px-4 py-2">
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-6 text-sm text-white/60">
+                Infinity Global Advisory — where execution happens.
+                <a
+                  className="ml-2 inline-flex items-center gap-1 text-[#4DA3FF]"
+                  href="https://infinityglobaladvisory.com"
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  Select System
-                  <ArrowRight size={16} />
-                </motion.a>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophy Section */}
-      <section id="framework" className="py-40 px-6 bg-[#0A84FF] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-        </div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-32 space-y-6">
-             <span className="text-white/60 font-black tracking-[0.4em] uppercase text-xs">Execution Framework</span>
-             <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">The Principles <br /> of Authority</h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/20 border border-white/20">
-            {PHILOSOPHY.map((item, i) => (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                key={i} 
-                className="p-12 bg-[#0A84FF] flex flex-col gap-6 hover:bg-white/5 transition-colors group"
-              >
-                <span className="text-6xl font-black text-white/20 group-hover:text-white/40 transition-colors">0{i+1}</span>
-                <h3 className="text-2xl font-black uppercase tracking-tighter leading-tight">{item.title}</h3>
-                <p className="text-white/80 text-lg font-light leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-32 text-center">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl md:text-4xl max-w-5xl mx-auto font-light italic leading-relaxed text-balance"
-            >
-              "We do not rise to the level of our goals. We fall to the level of our systems."
-            </motion.p>
-          </div>
-        </div>
-      </section>
-
-      {/* Ecosystem Section */}
-      <section className="py-40 px-6 bg-black relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0A84FF]/5 rounded-full blur-[120px]" />
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="mb-32 space-y-6">
-             <span className="text-[#0A84FF] font-black tracking-[0.4em] uppercase text-xs">The Ecosystem</span>
-             <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">Integrated <br /> Verticals</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {VENTURES.map((venture, i) => (
-              <motion.a
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(10,132,255,0.25)' }}
-                key={venture.name}
-                href={venture.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-8 border border-white/10 bg-white/[0.01] hover:border-[#0A84FF]/70 hover:bg-white/[0.03] transition-all duration-500 rounded-sm flex flex-col min-h-[340px]"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <span className="p-3 bg-[#0A84FF]/10 rounded-sm group-hover:bg-[#0A84FF]/20 transition-colors">{venture.icon}</span>
-                  <ExternalLink size={16} className="text-white/30 group-hover:text-[#0A84FF] transition-colors" />
-                </div>
-                <h3 className="text-2xl font-black mb-2 tracking-tighter uppercase group-hover:text-[#0A84FF] transition-colors">{venture.name}</h3>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-[#0A84FF] font-black mb-3">{venture.tagline}</p>
-                <p className="text-white/50 mb-6 leading-relaxed font-light">{venture.positioning}</p>
-                <ul className="space-y-2 mb-8 flex-grow">
-                  {venture.offer.map((item) => (
-                    <li key={item} className="text-sm text-white/70 uppercase tracking-wider font-bold flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <span className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-[#0A84FF]">
-                  {venture.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* Contact Section */}
-      <section id="contact" className="py-40 px-6 bg-black">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20">
-
-          <div>
-            <h2 className="text-6xl font-black uppercase mb-6">
-              Ready To Build With <span className="text-[#0A84FF]">Clarity?</span>
-            </h2>
-            <p>Email: {CONTACT_EMAIL}</p>
-            <p>Phone: {CONTACT_PHONE}</p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 p-10">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Full Name"
-                className="w-full bg-black border border-white/20 p-4"
-              />
-
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Email Address"
-                className="w-full bg-black border border-white/20 p-4"
-              />
-
-              <select
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="w-full bg-black border border-white/20 p-4"
-              >
-                <option value="">Select Inquiry</option>
-                <option value="Life Coaching">Life Coaching</option>
-                <option value="Education Consultancy">Education Consultancy</option>
-                <option value="Business Consultancy">Business Consultancy</option>
-              </select>
-
-              <textarea
-                rows={5}
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                placeholder="Describe your current bottleneck..."
-                className="w-full bg-black border border-white/20 p-4"
-              />
-
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="w-full bg-[#0A84FF] py-4 font-bold uppercase"
-              >
-                {status === 'sending' ? 'Sending...' : 'Initiate Strategy Session'}
-              </button>
-
-              {status === 'success' && (
-                <p className="text-green-400 text-sm">Message sent successfully.</p>
-              )}
-              {status === 'error' && (
-                <p className="text-red-400 text-sm">Something went wrong.</p>
-              )}
-
-            </form>
-          </div>
-        </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="py-32 px-6 bg-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-20 mb-32">
-            <div className="lg:col-span-2 space-y-10">
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 bg-white flex items-center justify-center">
-                  <img src={logo} alt="MG Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => {
-               e.currentTarget.style.display = 'none';
-               e.currentTarget.parentElement!.innerHTML = '<span class="text-black font-bold text-xl">MG</span>';
-             }} />
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="text-3xl font-black uppercase tracking-tighter leading-none">Manish Sir G</h3>
-                  <span className="text-[10px] tracking-[0.4em] uppercase text-[#0A84FF] font-black">Strategic Architect</span>
-                </div>
-              </div>
-              <p className="text-white/30 max-w-sm font-light leading-relaxed text-lg">
-                Strategic thinker and growth architect helping individuals and businesses build clarity, identity, and scalable systems for long-term dominance.
+                  Visit ecosystem <ExternalLink size={14} />
+                </a>
               </p>
-              <div className="flex items-center gap-6">
-                {SOCIAL_LINKS.map((social) => (
-                  <motion.a 
-                    whileHover={{ scale: 1.1, color: '#0A84FF' }}
-                    key={social.name} 
-                    href={social.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center text-white/20 hover:border-[#0A84FF] transition-all"
-                  >
-                    {social.icon}
-                  </motion.a>
+            </section>
+
+            <section className="border-b border-white/10 py-20 md:py-24">
+              <div className="flex items-end justify-between gap-4">
+                <SectionTitle
+                  eyebrow="Featured Insights"
+                  title="Writing that sharpens judgment."
+                  body="Essays at the intersection of psychology, strategy, and systems thinking."
+                />
+                <button
+                  onClick={() => navigate('insights')}
+                  className="hidden text-xs uppercase tracking-[0.18em] text-white/70 md:block"
+                >
+                  View all insights
+                </button>
+              </div>
+              <div className="mt-12 grid gap-5 md:grid-cols-2">
+                {featuredPosts.slice(0, 4).map((post) => (
+                  <BlogCard key={post.slug} post={post} />
                 ))}
               </div>
-            </div>
-            <div className="space-y-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#0A84FF]">Navigation</h4>
-              <ul className="space-y-5">
-                {['Home', 'About', 'Services', 'Contact'].map(item => (
-                  <li key={item}><a href={`#${item.toLowerCase()}`} className="text-sm font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">{item}</a></li>
+            </section>
+
+            <section className="border-b border-white/10 py-20 md:py-24">
+              <SectionTitle
+                eyebrow="Thinking"
+                title="My philosophy is simple: intelligence must become execution."
+              />
+              <div className="mt-10 grid gap-8 text-white/75 md:grid-cols-2">
+                <p className="leading-8">
+                  Most people do not lose because they lack ambition. They lose because their decisions are fragmented,
+                  reactive, and poorly sequenced.
+                </p>
+                <p className="leading-8">
+                  Sustainable advantage comes from psychological precision, strategic restraint, and systems that perform
+                  under pressure.
+                </p>
+              </div>
+            </section>
+
+            <section className="border-b border-white/10 py-20 md:py-24">
+              <SectionTitle
+                eyebrow="Work With Me"
+                title="Focused engagements for serious builders."
+              />
+              <div className="mt-10 grid gap-4 text-sm uppercase tracking-[0.18em] text-white/80 md:grid-cols-4">
+                {['Consulting', 'Mentorship', 'Strategy', 'Speaking'].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.02] px-5 py-8 text-center">
+                    {item}
+                  </div>
                 ))}
-              </ul>
+              </div>
+              <button
+                onClick={() => navigate('work-with-me')}
+                className="mt-10 rounded-full border border-white/20 px-6 py-3 text-sm uppercase tracking-[0.16em] text-white"
+              >
+                Explore Engagements
+              </button>
+            </section>
+
+            <section className="pt-20 md:pt-24">
+              <SectionTitle
+                eyebrow="Join the Inner Circle"
+                title="Weekly strategic notes for leaders who value clarity."
+                body="No noise. No trends. Just practical thinking frameworks and high-performance ideas."
+              />
+              <form className="mt-10 flex flex-col gap-4 md:max-w-xl md:flex-row">
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your best email"
+                  className="h-12 flex-1 rounded-full border border-white/15 bg-white/[0.02] px-5 text-sm text-white placeholder:text-white/35"
+                />
+                <button className="h-12 rounded-full bg-[#0A84FF] px-8 text-xs font-semibold uppercase tracking-[0.16em]">
+                  Subscribe
+                </button>
+              </form>
+            </section>
+          </>
+        ) : null}
+
+        {currentPage === 'about' ? (
+          <section className="space-y-10">
+            <SectionTitle
+              eyebrow="About"
+              title="I build systems for people who carry serious responsibility."
+            />
+            <p className="max-w-4xl text-lg leading-9 text-white/75">
+              My work began with one obsession: why high-potential people underperform in critical moments. Across
+              advisory, entrepreneurship, and coaching, I have seen the same pattern—talent is common, strategic clarity
+              is rare. I help leaders close that gap.
+            </p>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7">
+                <h3 className="text-lg font-semibold">Philosophy</h3>
+                <p className="mt-4 text-sm leading-8 text-white/70">
+                  Clarity precedes scale. Identity precedes influence. Systems precede results. My frameworks are built
+                  to turn insight into repeatable performance.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7">
+                <h3 className="text-lg font-semibold">Mission</h3>
+                <p className="mt-4 text-sm leading-8 text-white/70">
+                  To develop decision quality and strategic depth in founders, executives, and ambitious professionals so
+                  they can build meaningful outcomes with less noise and more precision.
+                </p>
+              </div>
             </div>
-            <div className="space-y-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#0A84FF]">Ecosystem</h4>
-              <ul className="space-y-5">
-                {VENTURES.map(v => (
-                  <li key={v.name}><a href={v.url} className="text-sm font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">{v.name}</a></li>
-                ))}
-              </ul>
+          </section>
+        ) : null}
+
+        {currentPage === 'insights' ? (
+          <section>
+            <SectionTitle
+              eyebrow="Insights"
+              title="The content engine: psychology, strategy, and influence."
+              body="Every article is structured for depth, SEO discoverability, and practical application."
+            />
+            <div className="mt-8 flex flex-wrap gap-3 text-xs uppercase tracking-[0.18em] text-white/65">
+              {['Psychology', 'Business Strategy', 'Power & Influence', 'Society & Systems', 'Personal Growth'].map(
+                (category) => (
+                  <span key={category} className="rounded-full border border-white/20 px-4 py-2">
+                    {category}
+                  </span>
+                ),
+              )}
             </div>
-            <div className="space-y-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#0A84FF]">Presence</h4>
-              <ul className="space-y-5">
-                {SOCIAL_LINKS.map(s => (
-                  <li key={s.name}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-sm font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-3">
-                      {s.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {featuredPosts.map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
             </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-10 pt-12 border-t border-white/5 text-[10px] uppercase tracking-[0.4em] font-black text-white/10">
-            <div>© {new Date().getFullYear()} Manish Sir G. All strategic rights reserved.</div>
-            <div className="flex gap-12">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Systems</a>
+            <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+          </section>
+        ) : null}
+
+        {currentPage === 'work-with-me' ? (
+          <section className="space-y-12">
+            <SectionTitle
+              eyebrow="Work With Me"
+              title="Strategic engagements for operators building at the next level."
+            />
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7">
+                <h3 className="text-lg font-semibold">Who this is for</h3>
+                <p className="mt-3 text-sm leading-8 text-white/70">
+                  Founders, growth-stage teams, and professionals navigating scale, complexity, or high-stakes decision
+                  environments.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7">
+                <h3 className="text-lg font-semibold">Problems I solve</h3>
+                <p className="mt-3 text-sm leading-8 text-white/70">
+                  Strategic drift, inconsistent execution, weak positioning, decision fatigue, and misaligned growth
+                  priorities.
+                </p>
+              </div>
             </div>
-          </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {['1:1 Consulting', 'Business Strategy', 'Mentorship', 'Speaking'].map((item) => (
+                <div key={item} className="rounded-2xl border border-white/10 p-6">
+                  <h4 className="text-base font-semibold">{item}</h4>
+                  <p className="mt-2 text-sm leading-7 text-white/65">
+                    Tailored engagement designed around your strategic objectives and execution constraints.
+                  </p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => navigate('contact')}
+              className="rounded-full bg-[#0A84FF] px-7 py-3 text-xs font-semibold uppercase tracking-[0.16em]"
+            >
+              Book Call / Contact
+            </button>
+          </section>
+        ) : null}
+
+        {currentPage === 'contact' ? (
+          <section className="space-y-8">
+            <SectionTitle
+              eyebrow="Contact"
+              title="For advisory, speaking, and strategic conversations."
+              body="Share context, goals, and timelines. Relevant inquiries receive a response within 48 hours."
+            />
+            <form
+              className="grid max-w-3xl gap-4"
+              onSubmit={(event: FormEvent) => {
+                event.preventDefault();
+                alert('Thanks. Your message has been captured.');
+              }}
+            >
+              <input
+                required
+                className="h-12 rounded-xl border border-white/15 bg-white/[0.02] px-4"
+                placeholder="Full name"
+              />
+              <input
+                required
+                type="email"
+                className="h-12 rounded-xl border border-white/15 bg-white/[0.02] px-4"
+                placeholder="Email address"
+              />
+              <textarea
+                required
+                className="min-h-36 rounded-xl border border-white/15 bg-white/[0.02] p-4"
+                placeholder="Tell me about your challenge"
+              />
+              <button className="h-12 w-fit rounded-full bg-[#0A84FF] px-8 text-xs font-semibold uppercase tracking-[0.16em]">
+                Send Inquiry
+              </button>
+            </form>
+            <p className="text-sm text-white/65">Direct email: {EMAIL}</p>
+          </section>
+        ) : null}
+      </main>
+
+      <footer className="border-t border-white/10 py-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-xs uppercase tracking-[0.16em] text-white/50">
+          <p>© {new Date().getFullYear()} Manish Goswami</p>
+          <p>Built for clarity, authority, and depth.</p>
         </div>
       </footer>
     </div>
   );
-};
+}
 
 export default App;
