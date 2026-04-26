@@ -1,5 +1,24 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
-import { ArrowRight, CalendarDays, ExternalLink, Mail, Menu, Phone, Search, Youtube, X } from 'lucide-react';
+import { FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
+import {
+  ArrowRight,
+  BookOpen,
+  BrainCircuit,
+  BriefcaseBusiness,
+  CalendarDays,
+  Compass,
+  ExternalLink,
+  Gem,
+  Layers3,
+  Mail,
+  Menu,
+  Phone,
+  PlayCircle,
+  Search,
+  Sparkles,
+  Target,
+  Youtube,
+  X,
+} from 'lucide-react';
 
 type StaticPage = 'home' | 'about' | 'insights' | 'work-with-me' | 'contact';
 type Page = StaticPage | 'insight-detail';
@@ -148,6 +167,30 @@ const setMetaTag = (selector: string, attr: 'content' | 'href', value: string) =
   el.setAttribute(attr, value);
 };
 
+const Container = ({ children, className = '' }: { children: ReactNode; className?: string }) => (
+  <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12 ${className}`}>{children}</div>
+);
+
+const Button = ({
+  children,
+  variant = 'primary',
+  className = '',
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' }) => (
+  <button
+    className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition duration-300 ${
+      variant === 'primary'
+        ? 'bg-gradient-to-r from-[#4DA3FF] to-[#2B7BFF] text-[#061325] shadow-[0_0_40px_rgba(47,136,255,0.35)] hover:brightness-110'
+        : 'border border-white/20 bg-white/[0.02] text-white hover:border-[#66B2FF]/50 hover:bg-[#66B2FF]/10'
+    } ${className}`}
+    {...props}
+  >
+    {children}
+  </button>
+);
+
+const sectionClass = 'mt-16 rounded-3xl border border-white/10 bg-[#0B111B]/75 p-7 sm:p-10 lg:mt-20 lg:p-14';
+
 const App = () => {
   const initialRoute = inferRoute(window.location.pathname);
   const [page, setPage] = useState<Page>(initialRoute.page);
@@ -183,8 +226,13 @@ const App = () => {
 
     document.title = meta.title;
     setMetaTag('meta[name="description"]', 'content', meta.description);
-    setMetaTag('meta[property="og:title"]', 'content', meta.title);
-    setMetaTag('meta[property="og:description"]', 'content', meta.description);
+    const ogTitle = page === 'home' ? 'Manish Goswami | Build Smarter. Think Deeper. Win Bigger.' : meta.title;
+    const ogDescription =
+      page === 'home'
+        ? 'Personal brand platform of Manish Goswami — strategist, entrepreneur, coach, consultant, and author.'
+        : meta.description;
+    setMetaTag('meta[property="og:title"]', 'content', ogTitle);
+    setMetaTag('meta[property="og:description"]', 'content', ogDescription);
     setMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
     setMetaTag('meta[name="twitter:title"]', 'content', meta.title);
     setMetaTag('meta[name="twitter:description"]', 'content', meta.description);
@@ -241,10 +289,10 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#080B12] text-white">
-      <div className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:px-12">
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#080B12]/90 backdrop-blur-md">
-          <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
+    <div className="min-h-screen overflow-x-hidden bg-[#05070D] text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05070D]/80 backdrop-blur-xl">
+        <Container>
+          <nav className="flex min-h-20 items-center justify-between py-4">
             <button onClick={() => navigateTo('home')} className="text-left">
               <p className="text-lg font-semibold tracking-wide">Manish Goswami</p>
               <p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Personal Brand Platform</p>
@@ -252,51 +300,37 @@ const App = () => {
 
             <div className="hidden items-center gap-8 lg:flex">
               {navItems.map((item) => (
-                <button
-                  key={item.page}
-                  onClick={() => navigateTo(item.page)}
-                  className="text-sm font-medium text-white/80 transition hover:text-white"
-                >
+                <button key={item.page} onClick={() => navigateTo(item.page)} className="text-sm font-medium text-white/80 transition hover:text-white">
                   {item.label}
                 </button>
               ))}
-              <button
-                onClick={() => navigateTo('work-with-me')}
-                className="rounded-full border border-[#66B2FF]/60 bg-[#66B2FF]/10 px-5 py-2.5 text-sm font-semibold text-[#9ECFFF] transition hover:bg-[#66B2FF]/20"
-              >
-                Work With Me
-              </button>
+              <Button onClick={() => navigateTo('work-with-me')} className="rounded-full px-5 py-2.5">Work With Me</Button>
             </div>
 
             <button className="lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation menu">
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </nav>
+        </Container>
 
-          {mobileOpen ? (
-            <div className="border-t border-white/10 bg-[#080B12] px-5 py-6 sm:px-8 lg:hidden">
+        {mobileOpen ? (
+          <Container className="lg:hidden">
+            <div className="border-t border-white/10 py-6">
               <div className="flex flex-col gap-4">
                 {navItems.map((item) => (
-                  <button
-                    key={item.page}
-                    onClick={() => navigateTo(item.page)}
-                    className="rounded-xl border border-white/10 px-4 py-3 text-left text-base font-medium text-white"
-                  >
+                  <button key={item.page} onClick={() => navigateTo(item.page)} className="rounded-xl border border-white/10 px-4 py-3 text-left text-base font-medium text-white">
                     {item.label}
                   </button>
                 ))}
-                <button
-                  onClick={() => navigateTo('work-with-me')}
-                  className="mt-2 rounded-xl border border-[#66B2FF]/50 bg-[#66B2FF]/10 px-4 py-3 text-base font-semibold text-[#A9D5FF]"
-                >
-                  Work With Me
-                </button>
+                <Button onClick={() => navigateTo('work-with-me')} className="mt-2">Work With Me</Button>
               </div>
             </div>
-          ) : null}
-        </header>
+          </Container>
+        ) : null}
+      </header>
 
-        <main className="pt-14">
+      <Container className="pb-20">
+        <main className="pt-12">
           {page === 'home' ? (
             <HomePage navigateTo={navigateTo} onSubmit={onSubmit} />
           ) : null}
@@ -329,33 +363,49 @@ const App = () => {
         </main>
 
         <Footer navigateTo={navigateTo} />
-      </div>
+      </Container>
     </div>
   );
 };
 
-const sectionClass = 'mt-20 rounded-3xl border border-white/10 bg-white/[0.02] p-7 sm:p-10 lg:p-14';
-
 const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slug?: string) => void; onSubmit: (event: FormEvent<HTMLFormElement>, message: string) => void }) => (
   <>
-    <section className="grid gap-12 rounded-3xl border border-white/10 bg-[#0D1220] p-8 shadow-[0_0_100px_rgba(41,123,255,0.08)] lg:grid-cols-2 lg:p-12">
+    <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.2)] lg:grid-cols-2 lg:p-12">
+      <div className="absolute -right-20 top-16 h-64 w-64 rounded-full bg-[#2d87ff]/20 blur-3xl" />
       <div>
         <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Personal Brand of Manish Goswami</p>
-        <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-6xl">Build Smarter. Think Deeper. Win Bigger.</h1>
-        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">
-          I help ambitious individuals, founders, professionals, and businesses unlock clarity, strategy, and execution power.
-        </p>
+        <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-6xl">
+          Build Smarter.
+          <br />
+          Think Deeper.
+          <br />
+          <span className="text-[#5EAFFF]">Win Bigger.</span>
+        </h1>
+        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">I help ambitious individuals, founders, professionals, and businesses unlock clarity, strategy, and execution power.</p>
         <div className="mt-8 grid gap-3 sm:flex">
-          <button onClick={() => navigateTo('work-with-me')} className="rounded-xl bg-[#4DA3FF] px-6 py-3 font-semibold text-[#061325]">Work With Me</button>
-          <button onClick={() => navigateTo('insights')} className="rounded-xl border border-white/20 px-6 py-3 font-semibold text-white">Explore Insights</button>
+          <Button onClick={() => navigateTo('work-with-me')}>Work With Me</Button>
+          <Button variant="secondary" onClick={() => navigateTo('insights')}>Explore Insights</Button>
         </div>
         <p className="mt-7 text-sm text-white/65">Strategist • Entrepreneur • Coach • Consultant • Author</p>
+        <div className="mt-6 inline-flex max-w-md items-center gap-3 rounded-2xl border border-[#66B2FF]/35 bg-[#66B2FF]/10 px-4 py-3 text-sm text-[#cae6ff]">
+          <Sparkles size={16} className="text-[#66B2FF]" />
+          Strategist. Entrepreneur. Architect of High-Performance Systems.
+        </div>
       </div>
-      <div className="rounded-3xl border border-[#66B2FF]/25 bg-gradient-to-br from-[#111A2E] to-[#0A0E18] p-7">
-        <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Strategist. Entrepreneur. Architect of High-Performance Systems.</p>
-        <p className="mt-6 text-2xl leading-relaxed text-white/90">
-          Manish Goswami works at the intersection of strategy, psychology, business, and personal transformation. His work focuses on helping individuals and businesses gain clarity, build systems, and execute with discipline.
-        </p>
+      <div className="relative rounded-3xl border border-[#66B2FF]/25 bg-gradient-to-br from-[#131e35] via-[#0d1424] to-[#090d16] p-8">
+        <div className="absolute inset-0 rounded-3xl shadow-[inset_0_0_80px_rgba(52,130,255,0.2)]" />
+        <div className="relative">
+          <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Authority Profile</p>
+          <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <p className="text-xl leading-relaxed text-white/90">A premium personal platform built to share strategic thinking, deeper insights, and execution frameworks for modern high-performers.</p>
+            <div className="mt-8 grid grid-cols-2 gap-3 text-sm text-white/80">
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Strategy</div>
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Psychology</div>
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Systems</div>
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3">Execution</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -369,8 +419,11 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
           ['Coach', 'I help you develop clarity, discipline, confidence, and self-leadership in a world full of distractions.'],
           ['Consultant', 'I advise businesses on positioning, growth strategy, digital systems, and execution frameworks.'],
           ['Author', 'I write about psychology, power, discipline, relationships, and the realities of modern society.'],
-        ].map(([title, body]) => (
-          <article key={title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6">
+        ].map(([title, body], index) => (
+          <article key={title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6 transition hover:-translate-y-1 hover:border-[#66B2FF]/50 hover:bg-[#101a2c]">
+            <div className="mb-4 inline-flex rounded-lg border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-2 text-[#8fc7ff]">
+              {[<Compass size={18} />, <Layers3 size={18} />, <Target size={18} />, <BriefcaseBusiness size={18} />, <BookOpen size={18} />][index]}
+            </div>
             <h3 className="text-xl font-semibold">{title}</h3>
             <p className="mt-3 text-sm leading-7 text-white/70">{body}</p>
           </article>
@@ -429,17 +482,27 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
           </article>
         ))}
       </div>
-      <button onClick={() => navigateTo('insights')} className="mt-7 rounded-xl border border-white/20 px-5 py-3 text-sm font-semibold">View All Insights</button>
+      <Button variant="secondary" onClick={() => navigateTo('insights')} className="mt-7">View All Insights</Button>
     </section>
 
-    <section className={sectionClass}>
+    <section className={`${sectionClass} grid gap-8 lg:grid-cols-2`}>
+      <div>
       <h2 className="text-3xl font-semibold">From Ideas to Insights</h2>
       <p className="mt-4 max-w-4xl text-white/75">Not everything can be understood in a short video.</p>
       <p className="mt-3 max-w-4xl text-white/75">My content goes deeper—breaking down ideas, behaviors, systems, and strategies so you can think independently and act with clarity.</p>
       <p className="mt-3 max-w-4xl text-white/75">Every video is expanded into deeper insights for those who want more than surface-level thinking. YouTube channel: @manishsirg</p>
       <div className="mt-7 grid gap-3 sm:flex">
-        <button onClick={() => navigateTo('insights')} className="rounded-xl bg-[#4DA3FF] px-6 py-3 font-semibold text-[#061325]">Read Articles</button>
-        <a href="https://www.youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="rounded-xl border border-white/20 px-6 py-3 font-semibold">Watch on YouTube</a>
+        <Button onClick={() => navigateTo('insights')}>Read Articles</Button>
+        <a href="https://www.youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3 font-semibold transition hover:border-[#66B2FF]/50 hover:bg-[#66B2FF]/10">Watch on YouTube</a>
+      </div>
+      </div>
+      <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0f182a] to-[#0a0f1a] p-7">
+        <p className="text-xs uppercase tracking-[0.2em] text-[#8bc6ff]">Content Engine</p>
+        <div className="mt-5 space-y-4">
+          <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4"><PlayCircle size={18} className="text-[#66B2FF]" /> Short-form video idea</div>
+          <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4"><ArrowRight size={16} className="text-[#66B2FF]" /> Deeper structured article</div>
+          <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4"><BrainCircuit size={18} className="text-[#66B2FF]" /> Practical strategic framework</div>
+        </div>
       </div>
     </section>
 
@@ -459,16 +522,17 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
           </div>
         ))}
       </div>
-      <button onClick={() => navigateTo('work-with-me')} className="mt-7 rounded-xl bg-[#4DA3FF] px-6 py-3 font-semibold text-[#061325]">Start a Conversation</button>
+      <Button onClick={() => navigateTo('work-with-me')} className="mt-7">Start a Conversation</Button>
     </section>
 
     <section className={sectionClass}>
       <h2 className="text-3xl font-semibold">Join the Inner Circle</h2>
       <p className="mt-4 max-w-3xl text-white/70">Get direct insights on psychology, strategy, discipline, business, and growth—without noise or fluff.</p>
+      {/* TODO: connect this form to newsletter backend endpoint when available. */}
       <form className="mt-7 grid gap-4 sm:grid-cols-2" onSubmit={(event) => onSubmit(event, 'Thanks for joining the Inner Circle. We will be in touch soon.') }>
         <input required name="name" placeholder="Name" className="h-12 rounded-xl border border-white/15 bg-[#0A111E] px-4" />
         <input required type="email" name="email" placeholder="Email" className="h-12 rounded-xl border border-white/15 bg-[#0A111E] px-4" />
-        <button className="h-12 rounded-xl bg-[#4DA3FF] px-5 font-semibold text-[#061325] sm:col-span-2">Join Now</button>
+        <button className="h-12 rounded-xl bg-gradient-to-r from-[#4DA3FF] to-[#2B7BFF] px-5 font-semibold text-[#061325] sm:col-span-2">Join Now</button>
       </form>
     </section>
 
@@ -476,8 +540,8 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
       <h2 className="text-3xl font-semibold">Ready to Think Sharper and Build Better?</h2>
       <p className="mt-4 text-white/70">Explore insights, understand systems, and take action with clarity.</p>
       <div className="mt-7 grid gap-3 sm:flex">
-        <button onClick={() => navigateTo('work-with-me')} className="rounded-xl bg-[#4DA3FF] px-6 py-3 font-semibold text-[#061325]">Work With Me</button>
-        <button onClick={() => navigateTo('insights')} className="rounded-xl border border-white/20 px-6 py-3 font-semibold">Read Insights</button>
+        <Button onClick={() => navigateTo('work-with-me')}>Work With Me</Button>
+        <Button variant="secondary" onClick={() => navigateTo('insights')}>Read Insights</Button>
       </div>
     </section>
   </>
@@ -720,7 +784,7 @@ const ContactPage = ({ onSubmit }: { onSubmit: (event: FormEvent<HTMLFormElement
 );
 
 const Footer = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) => (
-  <footer className="mt-20 border-t border-white/10 py-10">
+  <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10">
     <p className="text-sm uppercase tracking-[0.2em] text-[#8CC7FF]">Strategist. Entrepreneur. Architect of High-Performance Systems.</p>
     <p className="mt-4 max-w-2xl text-white/70">Helping individuals and businesses think clearly, build systems, and execute with discipline.</p>
     <div className="mt-6 flex flex-wrap gap-5 text-sm">
@@ -732,7 +796,7 @@ const Footer = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) => (
       <a href="https://www.youtube.com/@manishsirg" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />@manishsirg</a>
       <a href="https://www.youtube.com/@mangopeptalks" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white"><Youtube size={15} />@mangopeptalks</a>
     </div>
-    <p className="mt-6 text-sm text-white/60">Founder of Infinity Global Advisory.</p>
+    <p className="mt-6 inline-flex items-center gap-2 text-sm text-white/60"><Gem size={14} className="text-[#8CC7FF]" />Founder of Infinity Global Advisory.</p>
   </footer>
 );
 
