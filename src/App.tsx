@@ -314,9 +314,12 @@ const App = () => {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05070D]/80 backdrop-blur-xl">
         <Container>
           <nav className="flex min-h-20 items-center justify-between py-4">
-            <button onClick={() => navigateTo('home')} className="text-left">
-              <p className="text-lg font-semibold tracking-wide">Manish Goswami</p>
-              <p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Clarity, Strategy, Impact.</p>
+            <button onClick={() => navigateTo('home')} className="flex items-center gap-3 text-left">
+              <img src="/logo.svg" alt="MG logo" className="h-11 w-11 rounded-md border border-white/10 bg-black object-contain p-1" />
+              <div>
+                <p className="text-lg font-semibold tracking-wide">Manish Goswami</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Clarity, Strategy, Impact.</p>
+              </div>
             </button>
 
             <div className="hidden items-center gap-8 lg:flex">
@@ -822,6 +825,10 @@ const ContactPage = ({ onSubmit }: { onSubmit: (event: FormEvent<HTMLFormElement
 
 const Footer = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) => (
   <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10">
+    <div className="mb-5 inline-flex items-center gap-3">
+      <img src="/logo.svg" alt="MG logo" className="h-12 w-12 rounded-md border border-white/10 bg-black object-contain p-1" />
+      <p className="text-base font-semibold tracking-wide">Manish Goswami</p>
+    </div>
     <p className="text-sm uppercase tracking-[0.2em] text-[#8CC7FF]">Strategist. Entrepreneur. Architect of High-Performance Systems.</p>
     <p className="mt-4 max-w-2xl text-white/70">Helping individuals and businesses think clearly, build systems, and execute with discipline.</p>
     <div className="mt-6 flex flex-wrap gap-5 text-sm">
