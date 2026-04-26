@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   BookOpen,
@@ -6,7 +6,6 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   Compass,
-  Edit3,
   ExternalLink,
   Facebook,
   Gem,
@@ -17,10 +16,8 @@ import {
   Linkedin,
   Mail,
   Menu,
-  PenSquare,
   Phone,
   PlayCircle,
-  Save,
   Search,
   Sparkles,
   Target,
@@ -212,7 +209,7 @@ const sectionClass = 'mt-16 rounded-3xl border border-white/10 bg-[#0B111B]/75 p
 
 const App = () => {
   const initialRoute = inferRoute(window.location.pathname);
-  const [posts, setPosts] = useState<BlogPost[]>(() => {
+  const [posts] = useState<BlogPost[]>(() => {
     const saved = localStorage.getItem('manish-blog-posts');
     return saved ? (JSON.parse(saved) as BlogPost[]) : blogPosts;
   });
@@ -225,10 +222,6 @@ const App = () => {
 
   const activePost = useMemo(() => posts.find((post) => post.slug === activeSlug) ?? posts[0] ?? blogPosts[0], [activeSlug, posts]);
   const publishedPosts = useMemo(() => posts.filter((post) => post.status === 'published'), [posts]);
-
-  useEffect(() => {
-    localStorage.setItem('manish-blog-posts', JSON.stringify(posts));
-  }, [posts]);
 
   useEffect(() => {
     const onPopState = () => {
@@ -368,8 +361,6 @@ const App = () => {
           {page === 'insights' ? (
             <InsightsPage
               posts={publishedPosts}
-              allPosts={posts}
-              setPosts={setPosts}
               categories={categories}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -394,6 +385,16 @@ const App = () => {
 
         <Footer navigateTo={navigateTo} />
       </Container>
+      <a
+        href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-[#05240f] shadow-[0_12px_35px_rgba(37,211,102,0.45)] transition hover:brightness-110"
+      >
+        <Phone size={16} />
+        WhatsApp
+      </a>
     </div>
   );
 };
@@ -437,10 +438,11 @@ const HomePage = ({ navigateTo, onSubmit }: { navigateTo: (page: StaticPage, slu
           ['Coach', 'I help you develop clarity, discipline, confidence, and self-leadership in a world full of distractions.'],
           ['Consultant', 'I advise businesses on positioning, growth strategy, digital systems, and execution frameworks.'],
           ['Author', 'I write about psychology, power, discipline, relationships, and the realities of modern society.'],
+          ['Influencer', 'I create high-impact social media content that shapes opinions, drives action, and expands meaningful digital influence.'],
         ].map(([title, body], index) => (
           <article key={title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6 transition hover:-translate-y-1 hover:border-[#66B2FF]/50 hover:bg-[#101a2c]">
             <div className="mb-4 inline-flex rounded-lg border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-2 text-[#8fc7ff]">
-              {[<Compass size={18} />, <Layers3 size={18} />, <Target size={18} />, <BriefcaseBusiness size={18} />, <BookOpen size={18} />][index]}
+              {[<Compass size={18} />, <Layers3 size={18} />, <Target size={18} />, <BriefcaseBusiness size={18} />, <BookOpen size={18} />, <Sparkles size={18} />][index]}
             </div>
             <h3 className="text-xl font-semibold">{title}</h3>
             <p className="mt-3 text-sm leading-7 text-white/70">{body}</p>
@@ -611,10 +613,8 @@ const AboutPage = ({ navigateTo }: { navigateTo: (page: StaticPage) => void }) =
   </section>
 );
 
-const InsightsPage = ({ posts, allPosts, setPosts, categories, selectedCategory, setSelectedCategory, search, setSearch, visiblePosts, visibleCount, total, onLoadMore, openArticle }: {
+const InsightsPage = ({ posts, categories, selectedCategory, setSelectedCategory, search, setSearch, visiblePosts, visibleCount, total, onLoadMore, openArticle }: {
   posts: BlogPost[];
-  allPosts: BlogPost[];
-  setPosts: Dispatch<SetStateAction<BlogPost[]>>;
   categories: Array<'All' | BlogCategory>;
   selectedCategory: 'All' | BlogCategory;
   setSelectedCategory: (value: 'All' | BlogCategory) => void;
@@ -627,105 +627,12 @@ const InsightsPage = ({ posts, allPosts, setPosts, categories, selectedCategory,
   openArticle: (slug: string) => void;
 }) => {
   const featured = posts[0];
-  const [editingSlug, setEditingSlug] = useState<string | null>(null);
-  const [editor, setEditor] = useState({
-    title: '',
-    excerpt: '',
-    category: 'Psychology' as BlogCategory,
-    content: '',
-    bannerImage: '',
-    inlineImage: '',
-    affiliateLink: '',
-    youtubeLink: '',
-    status: 'draft' as 'draft' | 'published',
-  });
-
-  const resetEditor = () => {
-    setEditingSlug(null);
-    setEditor({ title: '', excerpt: '', category: 'Psychology', content: '', bannerImage: '', inlineImage: '', affiliateLink: '', youtubeLink: '', status: 'draft' });
-  };
-
-  const createOrUpdateBlog = (mode: 'draft' | 'published') => {
-    const slug = (editingSlug ?? editor.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')) || `post-${Date.now()}`;
-    const payload: BlogPost = {
-      slug,
-      title: editor.title,
-      excerpt: editor.excerpt,
-      category: editor.category,
-      content: editor.content.split('\n').map((line) => line.trim()).filter(Boolean),
-      date: new Date().toISOString().slice(0, 10),
-      readTime: `${Math.max(3, Math.ceil(editor.content.split(' ').filter(Boolean).length / 180))} min read`,
-      bannerImage: editor.bannerImage.trim(),
-      inlineImage: editor.inlineImage.trim(),
-      affiliateLink: editor.affiliateLink.trim(),
-      youtubeLink: editor.youtubeLink.trim(),
-      status: mode,
-    };
-    setPosts((prev) => {
-      const existing = prev.find((post) => post.slug === slug);
-      if (existing) return prev.map((post) => (post.slug === slug ? payload : post));
-      return [payload, ...prev];
-    });
-    resetEditor();
-  };
-
-  const submitBlog = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    createOrUpdateBlog('published');
-  };
-
-  const editPost = (post: BlogPost) => {
-    setEditingSlug(post.slug);
-    setEditor({
-      title: post.title,
-      excerpt: post.excerpt,
-      category: post.category,
-      content: post.content.join('\n'),
-      bannerImage: post.bannerImage ?? '',
-      inlineImage: post.inlineImage ?? '',
-      affiliateLink: post.affiliateLink ?? '',
-      youtubeLink: post.youtubeLink ?? '',
-      status: post.status,
-    });
-  };
 
   return (
     <section className={sectionClass}>
       <h1 className="text-4xl font-semibold md:text-5xl">Insights</h1>
       <p className="mt-4 text-xl text-white/75">Ideas on psychology, business, power, discipline, society, and growth.</p>
       <p className="mt-4 max-w-4xl text-white/70">This is where thinking becomes structured. Here, you’ll find deeper breakdowns of ideas, behaviors, systems, and strategies—designed to help you see clearly and act intelligently.</p>
-
-      <article className="mt-10 rounded-2xl border border-[#66B2FF]/30 bg-[#0B1320] p-7">
-        <p className="text-xs uppercase tracking-[0.2em] text-[#A8D4FF]">Blog Studio</p>
-        <h2 className="mt-3 text-2xl font-semibold">Write, Edit & Post Blogs</h2>
-        <p className="mt-2 text-white/70">Create drafts or publish with banner image, inline image, affiliate links, and YouTube links.</p>
-        <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={submitBlog}>
-          <input required value={editor.title} onChange={(event) => setEditor((prev) => ({ ...prev, title: event.target.value }))} placeholder="Blog title" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
-          <input required value={editor.excerpt} onChange={(event) => setEditor((prev) => ({ ...prev, excerpt: event.target.value }))} placeholder="Short excerpt" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
-          <select value={editor.category} onChange={(event) => setEditor((prev) => ({ ...prev, category: event.target.value as BlogCategory }))} className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4">
-            {categories.filter((item) => item !== 'All').map((item) => <option key={item}>{item}</option>)}
-          </select>
-          <input value={editor.bannerImage} onChange={(event) => setEditor((prev) => ({ ...prev, bannerImage: event.target.value }))} placeholder="Banner image URL" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
-          <input value={editor.inlineImage} onChange={(event) => setEditor((prev) => ({ ...prev, inlineImage: event.target.value }))} placeholder="Content image URL" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
-          <input value={editor.affiliateLink} onChange={(event) => setEditor((prev) => ({ ...prev, affiliateLink: event.target.value }))} placeholder="Affiliate link" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4" />
-          <input value={editor.youtubeLink} onChange={(event) => setEditor((prev) => ({ ...prev, youtubeLink: event.target.value }))} placeholder="YouTube video link" className="h-11 rounded-xl border border-white/15 bg-[#08101A] px-4 sm:col-span-2" />
-          <textarea required rows={6} value={editor.content} onChange={(event) => setEditor((prev) => ({ ...prev, content: event.target.value }))} placeholder="Write your blog content (new line = new paragraph)" className="rounded-xl border border-white/15 bg-[#08101A] p-4 sm:col-span-2" />
-          <div className="flex flex-wrap gap-3 sm:col-span-2">
-            <button type="button" onClick={() => createOrUpdateBlog('draft')} className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-2.5 text-sm font-semibold"><Save size={14} />Save Draft</button>
-            <button className="inline-flex items-center gap-2 rounded-xl bg-[#4DA3FF] px-5 py-2.5 text-sm font-semibold text-[#061325]"><PenSquare size={14} />{editingSlug ? 'Update & Post' : 'Post Blog'}</button>
-            {editingSlug ? <button type="button" onClick={resetEditor} className="rounded-xl border border-white/20 px-5 py-2.5 text-sm">Cancel Edit</button> : null}
-          </div>
-        </form>
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
-          {allPosts.slice(0, 6).map((post) => (
-            <div key={post.slug} className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-sm font-semibold">{post.title}</p>
-              <p className="mt-1 text-xs text-white/60">{post.status.toUpperCase()}</p>
-              <button onClick={() => editPost(post)} className="mt-3 inline-flex items-center gap-1 text-xs text-[#8CC7FF]"><Edit3 size={12} />Edit</button>
-            </div>
-          ))}
-        </div>
-      </article>
 
       {featured ? <article className="mt-10 rounded-2xl border border-white/10 bg-[#0D121D] p-7">
         <span className="text-xs uppercase tracking-[0.2em] text-[#A8D4FF]">Featured Article</span>
