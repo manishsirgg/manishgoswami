@@ -2,27 +2,41 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Outfit", sans-serif;
+  --font-heading: "Outfit", "Inter", sans-serif;
 }
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
   body {
-    @apply bg-black text-white antialiased;
+    @apply bg-[#080B12] text-white antialiased;
     font-family: var(--font-sans);
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
+    letter-spacing: -0.01em;
   }
 }
 
 @layer utilities {
-  .gradient-mesh {
-    background-image: radial-gradient(at 0% 0%, hsla(210,100%,20%,0.15) 0, transparent 50%),
-                      radial-gradient(at 100% 100%, hsla(210,100%,20%,0.1) 0, transparent 50%);
+  .glow-border {
+    box-shadow: 0 0 0 1px rgba(102, 178, 255, 0.2), 0 0 60px rgba(53, 130, 255, 0.12);
   }
-  
-  .text-balance {
-    text-wrap: balance;
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
