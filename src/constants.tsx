@@ -4,14 +4,14 @@ import { Shield, Target, TrendingUp, Dumbbell, GraduationCap, Building2, Home, P
 import { ServicePillar, PhilosophyItem, Venture } from './types';
 
 export const BRAND_NAME = "Manish Sir G";
-export const BRAND_TITLE = "Life Coaching | Education Consultancy | Business Consultancy";
+export const BRAND_TITLE = "Coach & Consultant";
 export const CONTACT_EMAIL = "manishsirgg@gmail.com";
 export const CONTACT_PHONE = "+91-8989601701";
 
 export const SERVICE_PILLARS: ServicePillar[] = [
   {
-    title: "Life Coaching & Personal Development",
-    description: "Expert guidance for life direction, mindset growth, and personal breakthroughs.",
+    title: "Men's Coaching",
+    description: "Personal guidance for confidence, direction, discipline, and healthy growth.",
     features: [
       "Life direction & clarity",
       "Confidence & Personality development",
@@ -22,8 +22,8 @@ export const SERVICE_PILLARS: ServicePillar[] = [
     icon: <Target className="w-8 h-8 text-[#0A84FF]" />
   },
   {
-    title: "Education Consultancy",
-    description: "Comprehensive support for career planning, university admissions, and test preparation.",
+    title: "Career Counseling & Abroad Admissions",
+    description: "Personal support for career planning, university admissions, and studying abroad.",
     features: [
       "Career planning & stream selection",
       "University shortlisting (India & Abroad)",
@@ -34,14 +34,14 @@ export const SERVICE_PILLARS: ServicePillar[] = [
     icon: <Shield className="w-8 h-8 text-[#0A84FF]" />
   },
   {
-    title: "Business Consultancy",
-    description: "Strategic solutions for brand identity, digital presence, and market growth.",
+    title: "Personal Branding & Digital Marketing",
+    description: "Focused guidance for personal positioning, content, and a credible digital presence.",
     features: [
       "Logo & brand identity design",
       "High-converting landing pages",
-      "Ecommerce & LMS website setup",
+      "Personal website direction",
       "Social media & Ads management",
-      "Media & PR strategy"
+      "Digital visibility strategy"
     ],
     icon: <TrendingUp className="w-8 h-8 text-[#0A84FF]" />
   }
