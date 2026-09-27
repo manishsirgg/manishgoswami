@@ -28,6 +28,12 @@ const EMAIL = 'manishsirgg@gmail.com';
 const WHATSAPP = '+918989601701';
 const YOUTUBE = 'https://youtube.com/@manishsirg';
 
+const XSocialIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817-5.967 6.817H1.68l7.73-8.835L1.254 2.25h6.826l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+  </svg>
+);
+
 const navItems: Array<{ label: string; page: Page; path: string }> = [
   { label: 'Home', page: 'home', path: '/' },
   { label: 'About', page: 'about', path: '/about' },
@@ -59,7 +65,25 @@ const socialLinks: Array<{ label: string; href: string; icon: ReactNode }> = [
   { label: 'Instagram', href: 'https://instagram.com/manishsirgg', icon: <Instagram size={16} /> },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/manishsirg/', icon: <Linkedin size={16} /> },
   { label: 'Facebook', href: 'https://www.facebook.com/manishsirg14', icon: <Facebook size={16} /> },
+  { label: 'X', href: 'https://x.com/manishsirg', icon: <XSocialIcon /> },
 ];
+
+const SocialLinks = ({ compact = false }: { compact?: boolean }) => (
+  <div className="flex flex-wrap items-center gap-2">
+    {socialLinks.map((link) => (
+      <a
+        key={link.label}
+        href={link.href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`Visit Manish Goswami on ${link.label}`}
+        className={`inline-flex items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-[#66B2FF]/50 hover:bg-[#66B2FF]/10 hover:text-white ${compact ? 'h-8 w-8' : 'h-10 w-10'}`}
+      >
+        {link.icon}
+      </a>
+    ))}
+  </div>
+);
 
 const services = [
   {
@@ -168,13 +192,14 @@ const App = () => {
               <img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black object-contain p-1" />
               <div><p className="text-lg font-semibold tracking-wide">Manish Goswami</p><p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Coach & Consultant</p></div>
             </button>
-            <div className="hidden items-center gap-7 lg:flex">
+            <div className="hidden items-center gap-5 lg:flex">
               {navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className={`text-sm font-medium transition hover:text-white ${page === item.page ? 'text-[#8CC7FF]' : 'text-white/75'}`}>{item.label}</button>)}
+              <SocialLinks compact />
               <Button onClick={() => navigateTo('work-with-me')} className="rounded-full px-5 py-2.5">Book 1:1</Button>
             </div>
             <button className="lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button>
           </nav>
-          {mobileOpen && <div className="border-t border-white/10 py-5 lg:hidden">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="mb-2 block w-full rounded-xl border border-white/10 px-4 py-3 text-left">{item.label}</button>)}</div>}
+          {mobileOpen && <div className="border-t border-white/10 py-5 lg:hidden">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="mb-2 block w-full rounded-xl border border-white/10 px-4 py-3 text-left">{item.label}</button>)}<div className="mt-4 border-t border-white/10 pt-4"><SocialLinks /></div></div>}
         </Container>
       </header>
       <Container className="pb-20">
@@ -264,6 +289,6 @@ const BookingCard = () => {
 
 const ContactPage = ({ navigateTo }: { navigateTo: (page: Page, hash?: string) => void }) => <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Contact</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Let’s talk about what’s next.</h1><p className="mt-4 max-w-2xl text-xl leading-8 text-white/70">For coaching, career counseling, abroad admission support or personal branding, reach out directly.</p><div className="mt-10 grid gap-4 sm:grid-cols-2"><a href={`mailto:${EMAIL}`} className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Mail className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Email</p><p className="mt-1">{EMAIL}</p></a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Phone className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">WhatsApp / Call</p><p className="mt-1">{WHATSAPP}</p></a><a href={YOUTUBE} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Youtube className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">YouTube</p><p className="mt-1">@manishsirg</p></a><div className="rounded-2xl border border-white/10 bg-[#0B111A] p-6"><GraduationCap className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Book online</p><a href="/work-with-me#book" onClick={(event) => { event.preventDefault(); navigateTo('work-with-me', '#book'); }} className="mt-1 inline-flex items-center gap-1 text-[#8CC7FF]">First Counseling Session <ArrowRight size={14} /></a></div></div></section>;
 
-const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-xs uppercase tracking-[0.2em] text-[#8CC7FF]">Coach & Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">Men’s coaching, career counseling, abroad admission support, and personal branding & digital marketing.</p></div><div className="flex gap-3">{socialLinks.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 hover:border-[#66B2FF]/50 hover:text-white">{link.icon}</a>)}</div></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
+const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-xs uppercase tracking-[0.2em] text-[#8CC7FF]">Coach & Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">Men’s coaching, career counseling, abroad admission support, and personal branding & digital marketing.</p></div><SocialLinks /></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
 
 export default App;
