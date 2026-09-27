@@ -11,11 +11,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manishgoswami.com/insights</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://manishgoswami.com/work-with-me</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
