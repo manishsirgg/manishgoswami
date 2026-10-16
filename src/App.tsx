@@ -43,20 +43,20 @@ const navItems: Array<{ label: string; page: Page; path: string }> = [
 
 const pageMeta: Record<Page, { title: string; description: string }> = {
   home: {
-    title: 'Manish Goswami | Coach & Consultant',
-    description: "Men’s coaching, career counseling, abroad admissions and personal branding, plus citizenship, permanent residency and global mobility guidance through Infinity Global Advisory.",
+    title: 'Manish Goswami | Founder, Coach & Consultant',
+    description: 'One-to-one guidance for men’s transformation, career and education, personal branding and digital growth, citizenship and residency, and real estate.',
   },
   about: {
-    title: 'About Manish Goswami | Coach & Consultant',
-    description: "Meet Manish Goswami: coaching, career, education and personal branding guidance, with citizenship and residency support through Infinity Global Advisory.",
+    title: 'About Manish Goswami | Founder, Coach & Consultant',
+    description: 'Meet Manish Goswami, founder of five platforms supporting personal growth, careers, brands, global opportunities and property decisions.',
   },
   'work-with-me': {
-    title: 'Work With Manish Goswami | 1:1 Counseling',
-    description: "Explore coaching, career, abroad admissions, personal branding, citizenship and permanent residency guidance with Manish Goswami.",
+    title: 'Work With Manish Goswami | One-on-One Consultations',
+    description: 'Book a consultation for personal transformation, career and education, brand and digital growth, citizenship and residency, or property guidance.',
   },
   contact: {
-    title: 'Contact Manish Goswami | Coach & Consultant',
-    description: 'Contact Manish Goswami for coaching, education, branding or citizenship, permanent residency and global mobility inquiries.',
+    title: 'Contact Manish Goswami | Coaching & Consulting',
+    description: 'Contact Manish Goswami for one-to-one coaching and consulting across personal growth, education, digital business, global opportunities and real estate.',
   },
 };
 
@@ -87,50 +87,43 @@ const SocialLinks = ({ compact = false }: { compact?: boolean }) => (
 
 const services = [
   {
-    title: "Men's Coaching",
-    copy: 'Build confidence, emotional strength, discipline, relationships and a clear direction for the man you want to become.',
-    icon: <UserRound size={20} />,
-    points: ['Confidence & self-worth', 'Discipline & habits', 'Relationships & life direction'],
+    name: 'EvoLeveX', category: 'Men’s personal transformation',
+    title: 'Men’s Personal Transformation', action: 'Become stronger & more capable',
+    copy: 'Build confidence, discipline, emotional strength and a clearer sense of direction. Work on the habits, mindset and relationships that shape the man you want to become.',
+    points: ['Confidence, self-worth & life direction', 'Discipline, habits & emotional resilience', 'Relationships, boundaries & personal growth'],
+    icon: <UserRound size={22} />, href: 'https://evolevex.com/',
   },
   {
-    title: 'Career Counseling',
-    copy: 'Choose your next move with clarity—from stream and course selection to career transitions and a practical action plan.',
-    icon: <Briefcase size={20} />,
-    points: ['Career clarity', 'Course & stream selection', 'Career transition planning'],
+    name: 'VidyaInfinity', category: 'Career counselling & education',
+    title: 'Career Counselling & Education Consultancy', action: 'Build your career',
+    copy: 'Make informed choices about your career and education. Explore courses and institutes, plan study-abroad applications, and get support for your next academic or professional step.',
+    points: ['Career guidance & psychometric assessments', 'Course discovery, institutes & enrolment support', 'Study abroad, university applications & SOPs'],
+    icon: <GraduationCap size={22} />, href: 'https://vidyainfinity.com/',
   },
   {
-    title: 'Abroad Admission Support',
-    copy: 'Get personal guidance through university shortlisting, applications, SOPs and the study-abroad journey.',
-    icon: <Plane size={20} />,
-    points: ['University shortlisting', 'Applications & SOP guidance', 'Visa documentation support'],
+    name: 'InfinityGrowthTech', category: 'Personal branding & digital marketing',
+    title: 'Personal Branding & Digital Marketing', action: 'Build your brand & grow digitally',
+    copy: 'Clarify your positioning and turn it into a visible digital presence. Connect brand identity, websites, content and marketing with the practical tools your business needs to grow.',
+    points: ['Brand identity, websites, landing pages & online stores', 'Social media, video, Meta Ads & Google Ads', 'Marketplace management, PR, SaaS & AI automation'],
+    icon: <Sparkles size={22} />, href: 'https://infinitygrowthtech.com/',
   },
   {
-    title: 'Personal Branding & Digital Marketing',
-    copy: 'Shape a credible personal brand, communicate your value and build a focused digital presence that feels like you.',
-    icon: <Sparkles size={20} />,
-    points: ['Positioning & messaging', 'Content direction', 'Digital presence'],
+    name: 'Infinity Global Advisory', category: 'Citizenship, residency & globalship',
+    title: 'Citizenship, Permanent Residency & Globalship', action: 'Explore global opportunities',
+    copy: 'Explore citizenship, permanent residency and global mobility in the context of your goals. Discuss your priorities and questions as you consider opportunities across borders.',
+    points: ['Citizenship goals & pathway exploration', 'Permanent residency & long-term plans', 'Globalship: international mobility & opportunities'],
+    icon: <Plane size={22} />, href: 'https://www.infinityglobaladvisory.com/',
   },
   {
-    title: 'Citizenship Guidance',
-    copy: 'Explore citizenship options through Infinity Global Advisory. Start with your goals and questions to understand what to consider before taking the next step.',
-    icon: <Plane size={20} />,
-    points: ['Citizenship goals & priorities', 'Questions about available pathways', 'Next steps through Infinity Global Advisory'],
-  },
-  {
-    title: 'Permanent Residency & Global Mobility',
-    copy: 'Discuss long-term residency and international mobility goals through Infinity Global Advisory, with a focus on your circumstances and plans for the future.',
-    icon: <Briefcase size={20} />,
-    points: ['Permanent residency goals', 'Long-term international plans', 'Guidance through Infinity Global Advisory'],
+    name: 'BrickInfinity', category: 'Real estate marketplace',
+    title: 'Real Estate — Rent, Buy & Sell', action: 'Find your next property connection',
+    copy: 'Bring clarity to your property search or listing goals. Explore a marketplace for renting, buying and selling, and connect your property needs with your next move.',
+    points: ['Explore rental property options', 'Discover properties to buy', 'List property for sale & connect with buyers'],
+    icon: <Briefcase size={22} />, href: 'https://brickinfinity.com/',
   },
 ];
 
-const ventures = [
-  { category: 'Personal growth', action: 'Build your discipline', icon: <Target size={22} />, name: 'EvoLeveX', copy: 'Men’s growth, discipline and self-mastery.', href: 'https://EvoLeveX.com' },
-  { category: 'Education & career', action: 'Explore your next step', icon: <GraduationCap size={22} />, name: 'VidyaInfinity', copy: 'Career clarity and global education support.', href: 'https://vidyainfinity.com' },
-  { category: 'Business & digital', action: 'Grow your digital presence', icon: <Sparkles size={22} />, name: 'InfinityGrowthTech', copy: 'Digital presence, technology and marketing support.', href: 'https://infinitygrowthtech.com' },
-  { category: 'Citizenship & residency', action: 'Explore citizenship & residency options', icon: <Plane size={22} />, name: 'Infinity Global Advisory', copy: 'Citizenship, permanent residency and global mobility guidance.', href: 'https://www.infinityglobaladvisory.com/' },
-  { category: 'Real estate', action: 'Explore property connections', icon: <Briefcase size={22} />, name: 'BrickInfinity', copy: 'Simple, trusted real-estate connections.', href: 'https://BrickInfinity.com' },
-];
+const ventures = services;
 
 const Container = ({ children, className = '' }: { children: ReactNode; className?: string }) => (
   <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12 ${className}`}>{children}</div>
@@ -203,7 +196,7 @@ const App = () => {
           <nav className="flex min-h-20 items-center justify-between py-4">
             <button onClick={() => navigateTo('home')} className="flex items-center gap-3 text-left">
               <img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black object-contain p-1" />
-              <div><p className="text-lg font-semibold tracking-wide">Manish Goswami</p><p className="text-xs uppercase tracking-[0.24em] text-[#66B2FF]">Coach & Consultant</p></div>
+              <div><p className="text-lg font-semibold tracking-wide">Manish Goswami</p><p className="text-[9px] uppercase tracking-[0.1em] sm:text-xs text-[#66B2FF]">Founder • Coach • Consultant</p></div>
             </button>
             <div className="hidden items-center gap-5 lg:flex">
               {navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className={`text-sm font-medium transition hover:text-white ${page === item.page ? 'text-[#8CC7FF]' : 'text-white/75'}`}>{item.label}</button>)}
@@ -238,8 +231,8 @@ const PlatformShowcase = () => (
     <div className="platform-intro">
       <div>
         <p className="platform-eyebrow"><span /> The Manish Goswami ecosystem</p>
-        <h2 id="platforms-heading">Your next move starts here.</h2>
-        <p className="platform-description">Five focused platforms. Find the one for your goals and take your next step.</p>
+        <h2 id="platforms-heading">One founder. Five ways to move forward.</h2>
+        <p className="platform-description">Explore Manish Goswami’s platforms for personal transformation, careers, digital growth, global opportunities and property. Choose the one that fits your next step.</p>
       </div>
       <span className="platform-invitation">Choose your direction <ArrowRight size={18} aria-hidden="true" /></span>
     </div>
@@ -248,7 +241,7 @@ const PlatformShowcase = () => (
         <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer" className={`platform-card platform-card-${index}`}>
           <div className="platform-card-top"><span className="platform-icon" aria-hidden="true">{venture.icon}</span><span className="platform-category">{venture.category}</span><ExternalLink size={17} aria-hidden="true" /></div>
           <h3>{venture.name}</h3>
-          <p>{venture.copy}</p>
+          <p>{venture.points[0]}. {venture.points[1]}.</p>
           <span className="platform-goal">{venture.action}</span>
           <span className="platform-action">Visit {venture.name}<ArrowRight size={18} aria-hidden="true" /></span>
           <span className="platform-domain">{new URL(venture.href).hostname}<span className="platform-new-tab">Opens in a new tab</span></span>
@@ -258,16 +251,14 @@ const PlatformShowcase = () => (
   </section>
 );
 
-const GlobalAdvisorySection = () => (
-  <section className={`${sectionClass} glow-border`} aria-labelledby="global-advisory-heading">
-    <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Infinity Global Advisory</p>
-    <h2 id="global-advisory-heading" className="mt-3 text-3xl font-semibold">Plan your next chapter across borders.</h2>
-    <p className="mt-4 max-w-3xl leading-8 text-white/75">Thinking about citizenship, permanent residency or a future abroad? Explore these goals through Infinity Global Advisory, alongside the ecosystem’s support for careers, education and personal growth.</p>
+const ConsultationApproach = () => (
+  <section className={sectionClass} aria-labelledby="consultation-approach-heading">
+    <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work directly with Manish</p>
+    <h2 id="consultation-approach-heading" className="mt-3 text-3xl font-semibold">Your goals first. A practical way forward.</h2>
+    <p className="mt-4 max-w-3xl leading-8 text-white/75">You may be working on yourself, choosing a career, growing a business, exploring life abroad or planning a property move. Start with the decision in front of you. I’ll help you see how the pieces fit together and choose your next steps.</p>
     <div className="mt-7 grid gap-5 md:grid-cols-3">
-      {[{ title: 'Citizenship', copy: 'Explore citizenship pathways and the questions that matter for your plans.' }, { title: 'Permanent residency', copy: 'Consider long-term residency goals in the context of your personal and professional future.' }, { title: 'Global mobility', copy: 'Connect your international plans with your priorities for life and work.' }].map((item) => <article key={item.title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6"><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{item.copy}</p></article>)}
+      {[{ title: '1. Understand your situation', copy: 'Bring your questions, priorities and challenges. We start with your circumstances and what you want to change.' }, { title: '2. Choose your focus', copy: 'Identify the coaching or consulting area that fits your needs, drawing on the relevant platform when useful.' }, { title: '3. Leave with next steps', copy: 'Turn the conversation into clear actions, resources and the right connections for your next stage.' }].map((item) => <article key={item.title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6"><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{item.copy}</p></article>)}
     </div>
-    <a href="https://www.infinityglobaladvisory.com/" target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#4DA3FF] px-5 py-3 text-sm font-semibold text-[#061325]">Explore Infinity Global Advisory <ExternalLink size={16} /><span className="platform-sr-only"> (opens in a new tab)</span></a>
-    <p className="mt-4 max-w-3xl text-sm leading-6 text-white/60">Looking to study abroad? Explore admission support through VidyaInfinity. For citizenship, permanent residency and longer-term global mobility goals, explore Infinity Global Advisory.</p>
   </section>
 );
 
@@ -277,24 +268,24 @@ const HomePage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
     <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.18)] lg:grid-cols-[1.12fr_0.88fr] lg:p-12 mt-10">
       <div className="absolute -right-20 top-16 h-64 w-64 rounded-full bg-[#2d87ff]/20 blur-3xl" />
       <div className="relative self-center">
-        <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Coach & Consultant</p>
+        <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Founder • Coach • Consultant</p>
         <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-6xl">Clarity for your life.<br /><span className="text-[#5EAFFF]">Direction for what’s next.</span></h1>
-        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">Personal guidance for men, students and professionals navigating confidence, career choices, global education and personal visibility. Explore citizenship, permanent residency and global mobility through Infinity Global Advisory.</p>
+        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">I’m Manish Goswami—Founder, Coach & Consultant. I help individuals build themselves, shape their careers, grow their brands and businesses, explore global opportunities, and navigate property decisions.</p>
         <div className="mt-8 grid gap-3 sm:flex"><Button onClick={() => navigateTo('work-with-me')}>Book a 1:1 Session <ArrowRight size={16} /></Button><Button variant="secondary" onClick={() => navigateTo('about')}>About Manish</Button></div>
-        <p className="mt-7 text-sm text-white/60">Coaching • Careers • Study Abroad • Personal Branding • Citizenship & Residency</p>
+        <p className="mt-7 text-sm text-white/60">Personal Transformation • Career & Education • Brand & Business • Global Opportunities • Property</p>
       </div>
       <div className="relative rounded-3xl border border-[#66B2FF]/25 bg-[#070C14] p-3"><img src="/hero.png" alt="Manish Goswami" className="h-full max-h-[620px] w-full rounded-[1.25rem] object-cover" /></div>
     </section>
 
     <section className={sectionClass}>
-      <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">How I can help</p><h2 className="mt-3 text-3xl font-semibold">Support for your personal, professional and global next steps</h2>
+      <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">How I can help</p><h2 className="mt-3 text-3xl font-semibold">Five areas of support. Your goals at the centre.</h2>
       <div className="mt-8 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div>
     </section>
 
-    <GlobalAdvisorySection />
+    <ConsultationApproach />
 
     <section className={`${sectionClass} grid gap-8 lg:grid-cols-[1fr_0.8fr]`}>
-      <div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Start with one conversation</p><h2 className="mt-3 text-3xl font-semibold">First Counseling Session</h2><p className="mt-4 max-w-2xl leading-7 text-white/70">A private 40-minute Google Meet session to understand your goals—whether personal growth, career, education, branding or exploring citizenship and residency—and identify practical next steps.</p><div className="mt-6 flex flex-wrap gap-3 text-sm text-white/75"><span className="rounded-full border border-white/15 px-4 py-2">40 minutes</span><span className="rounded-full border border-white/15 px-4 py-2">Google Meet</span><span className="rounded-full border border-[#66B2FF]/40 bg-[#66B2FF]/10 px-4 py-2 font-semibold text-[#A8D4FF]">₹5,000</span></div></div>
+      <div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Start with one conversation</p><h2 className="mt-3 text-3xl font-semibold">One-on-One Consultation</h2><p className="mt-4 max-w-2xl leading-7 text-white/70">A private 40-minute Google Meet session with Manish to discuss your goals in personal transformation, career and education, digital growth, global opportunities or property—and identify practical next steps.</p><div className="mt-6 flex flex-wrap gap-3 text-sm text-white/75"><span className="rounded-full border border-white/15 px-4 py-2">40 minutes</span><span className="rounded-full border border-white/15 px-4 py-2">Google Meet</span><span className="rounded-full border border-[#66B2FF]/40 bg-[#66B2FF]/10 px-4 py-2 font-semibold text-[#A8D4FF]">₹5,000</span></div></div>
       <div className="flex items-center rounded-2xl border border-[#66B2FF]/25 bg-[#0B1728] p-7"><div><BadgeCheck className="text-[#66B2FF]" size={28} /><p className="mt-4 text-lg font-semibold">Confidential. Practical. Personal.</p><p className="mt-2 text-sm leading-6 text-white/65">Choose your focus and preferred time, then continue to booking.</p><Button onClick={() => navigateTo('work-with-me')} className="mt-5">Schedule Your Session</Button></div></div>
     </section>
 
@@ -302,33 +293,41 @@ const HomePage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
   </>
 );
 
-const ServiceCard = ({ title, copy, icon, points }: { title: string; copy: string; icon: ReactNode; points: string[] }) => <article className="rounded-2xl border border-white/10 bg-[#0B111E] p-6 transition hover:border-[#66B2FF]/45"><div className="inline-flex rounded-xl border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-2.5 text-[#8fc7ff]">{icon}</div><h3 className="mt-4 text-xl font-semibold">{title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{copy}</p><ul className="mt-4 space-y-2 text-sm text-white/60">{points.map((point) => <li key={point} className="flex gap-2"><span className="text-[#66B2FF]">✓</span>{point}</li>)}</ul></article>;
+const ServiceCard = ({ title, copy, icon, points, name, href }: { title: string; copy: string; icon: ReactNode; points: string[]; name: string; href: string }) => (
+  <article className="flex flex-col rounded-2xl border border-white/10 bg-[#0B111E] p-6 transition hover:border-[#66B2FF]/45">
+    <div className="inline-flex self-start rounded-xl border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-2.5 text-[#8fc7ff]">{icon}</div>
+    <h3 className="mt-4 text-xl font-semibold">{title}</h3>
+    <p className="mt-3 text-sm leading-7 text-white/70">{copy}</p>
+    <ul className="mt-4 mb-6 space-y-2 text-sm text-white/60">{points.map((point) => <li key={point} className="flex gap-2"><span className="text-[#66B2FF]">✓</span>{point}</li>)}</ul>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 self-start text-sm font-semibold text-[#8CC7FF]">Explore {name}<ExternalLink size={14} /><span className="platform-sr-only"> (opens in a new tab)</span></a>
+  </article>
+);
 
 const AboutPage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
   <section className={sectionClass}>
-    <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">About</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Manish Goswami</h1><p className="mt-4 text-xl text-white/75">Coach & Consultant</p>
+    <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">About</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Manish Goswami</h1><p className="mt-4 text-xl text-white/75">Founder • Coach • Consultant</p>
     <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_0.75fr]">
       <div className="space-y-8 text-white/72">
-        <article><h2 className="text-2xl font-semibold text-white">Guidance built around the person</h2><p className="mt-3 leading-8">I help men, students and professionals make considered decisions about their lives, careers and future. My work brings together men’s coaching, career counseling, overseas admission support and personal branding. Through Infinity Global Advisory, the ecosystem also offers guidance on citizenship, permanent residency and global mobility.</p></article>
-        <article><h2 className="text-2xl font-semibold text-white">My approach</h2><p className="mt-3 leading-8">Good guidance does not hand you a generic answer. It asks better questions, understands your context and turns clarity into practical action. Every conversation is direct, confidential and focused on decisions you can use.</p></article>
-        <article><h2 className="text-2xl font-semibold text-white">What I believe</h2><p className="mt-3 leading-8">Confidence grows through honest self-understanding. Careers become clearer when strengths meet opportunity. A strong personal brand begins with a true, consistent identity—not performance for attention.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">Guidance built around the person</h2><p className="mt-3 leading-8">I’m Manish Goswami, a founder, coach and consultant helping individuals make clearer decisions and take practical action. My work spans men’s personal transformation, career counselling and education, personal branding and digital marketing, citizenship and residency, and property needs.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">A connected ecosystem</h2><p className="mt-3 leading-8">I founded EvoLeveX for men’s transformation, VidyaInfinity for careers and education, InfinityGrowthTech for brands and digital business growth, Infinity Global Advisory for citizenship and residency, and BrickInfinity for property connections. Each platform has a distinct purpose; one-to-one consultations bring the right support together around you.</p></article><article><h2 className="text-2xl font-semibold text-white">My approach</h2><p className="mt-3 leading-8">Good guidance does not hand you a generic answer. It asks better questions, understands your context and turns clarity into practical action. Every conversation is direct, confidential and focused on decisions you can use.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">What I believe</h2><p className="mt-3 leading-8">Growth starts with understanding yourself and making deliberate choices. Whether you’re building confidence, choosing an education path, creating a brand, considering a global move or exploring property, your decisions should fit your goals and circumstances.</p></article>
       </div>
-      <aside className="rounded-2xl border border-white/10 bg-[#0A101A] p-7"><h2 className="text-xl font-semibold">Areas of focus</h2><div className="mt-5 space-y-3">{["Men’s identity, confidence & discipline", 'Career choices & transitions', 'Study-abroad planning', 'Personal positioning & digital presence', 'Citizenship & permanent residency', 'Global mobility planning'].map((item) => <div key={item} className="flex gap-3 rounded-xl border border-white/10 p-4 text-sm text-white/75"><Target size={17} className="shrink-0 text-[#66B2FF]" />{item}</div>)}</div><Button onClick={() => navigateTo('work-with-me')} className="mt-6 w-full">Work With Me</Button></aside>
+      <aside className="rounded-2xl border border-white/10 bg-[#0A101A] p-7"><h2 className="text-xl font-semibold">Areas of focus</h2><div className="mt-5 space-y-3">{services.map((service) => service.title).map((item) => <div key={item} className="flex gap-3 rounded-xl border border-white/10 p-4 text-sm text-white/75"><Target size={17} className="shrink-0 text-[#66B2FF]" />{item}</div>)}</div><Button onClick={() => navigateTo('work-with-me')} className="mt-6 w-full">Work With Me</Button></aside>
     </div>
-    <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noreferrer" className="rounded-xl border border-white/10 p-4 text-sm font-semibold hover:border-[#66B2FF]/40">{venture.name} <ExternalLink className="ml-1 inline" size={13} /></a>)}</div>
+    <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noreferrer" className="rounded-xl border border-white/10 p-4 text-sm font-semibold hover:border-[#66B2FF]/40">{venture.name} <ExternalLink className="ml-1 inline" size={13} /></a>)}</div>
   </section>
 );
 
 const WorkWithMePage = () => (
   <>
-    <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work with me</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">One clear conversation can change your direction.</h1><p className="mt-4 max-w-3xl text-xl leading-8 text-white/70">Choose support for personal growth, career decisions, study abroad, personal branding, or citizenship and permanent residency. We’ll use the first session to understand your situation and identify the next steps. Citizenship, residency and global mobility inquiries connect with Infinity Global Advisory.</p><div className="mt-10 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div></section>
-    <GlobalAdvisorySection />
+    <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work with me</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">One clear conversation can change your direction.</h1><p className="mt-4 max-w-3xl text-xl leading-8 text-white/70">Work one-to-one with Manish Goswami on the decisions that matter to you. Choose personal transformation, career and education, branding and digital growth, citizenship and residency, or property. Start with your questions and leave with a clearer direction.</p><div className="mt-10 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div></section>
+    <ConsultationApproach />
     <BookingCard />
   </>
 );
 
 const BookingCard = () => {
-  const [booking, setBooking] = useState({ name: '', email: '', focus: "Men's Coaching", date: '', time: '' });
+  const [booking, setBooking] = useState({ name: '', email: '', focus: services[0].title, date: '', time: '' });
   const [ready, setReady] = useState(false);
   const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setReady(true); };
   const calendarUrl = (() => {
@@ -336,18 +335,18 @@ const BookingCard = () => {
     const start = new Date(`${booking.date}T${booking.time}:00`);
     const end = new Date(start.getTime() + 40 * 60 * 1000);
     const format = (date: Date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const params = new URLSearchParams({ action: 'TEMPLATE', text: `First Counseling Session — ${booking.focus}`, dates: `${format(start)}/${format(end)}`, details: `Private 1:1 counseling with Manish Goswami. Focus: ${booking.focus}. A Google Meet link will be shared after payment confirmation. Client: ${booking.name} (${booking.email}). Fee: INR 5,000.`, add: EMAIL });
+    const params = new URLSearchParams({ action: 'TEMPLATE', text: `One-on-One Consultation — ${booking.focus}`, dates: `${format(start)}/${format(end)}`, details: `Private 1:1 consultation with Manish Goswami. Focus: ${booking.focus}. A Google Meet link will be shared after payment confirmation. Client: ${booking.name} (${booking.email}). Fee: INR 5,000.`, add: EMAIL });
     return `https://calendar.google.com/calendar/render?${params}`;
   })();
-  const paymentMessage = encodeURIComponent(`Hi Manish, I have scheduled my first counseling session for ${booking.date} at ${booking.time} (${booking.focus}). Please send me the secure payment link for ₹5,000 and confirm my Google Meet.`);
+  const paymentMessage = encodeURIComponent(`Hi Manish, I have scheduled my one-on-one consultation for ${booking.date} at ${booking.time} (${booking.focus}). Please send me the secure payment link for ₹5,000 and confirm my Google Meet.`);
 
-  return <section className={`${sectionClass} scroll-mt-24 glow-border`} id="book"><div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]"><div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">1:1 on Google Meet</p><h2 className="mt-3 text-3xl font-semibold">First Counseling Session</h2><p className="mt-4 leading-7 text-white/70">40 focused minutes to discuss your goals and identify next steps. For citizenship and permanent residency, this is an initial guidance session; application work and any related fees are discussed separately.</p><div className="mt-6 rounded-2xl border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-5"><p className="text-sm text-white/60">Session fee</p><p className="mt-1 text-3xl font-semibold">₹5,000 <span className="text-sm font-normal text-white/50">INR</span></p></div><ul className="mt-6 space-y-3 text-sm text-white/70"><li>✓ Private Google Meet session</li><li>✓ Your chosen coaching or advisory focus</li><li>✓ 40-minute first consultation</li><li>✓ Clear, practical next steps</li></ul></div><div>
+  return <section className={`${sectionClass} scroll-mt-24 glow-border`} id="book"><div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]"><div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">1:1 on Google Meet</p><h2 className="mt-3 text-3xl font-semibold">One-on-One Consultation</h2><p className="mt-4 leading-7 text-white/70">40 focused minutes with Manish to understand your situation, explore your chosen area and identify next steps. Ongoing coaching, project delivery, application work and marketplace services are scoped separately.</p><div className="mt-6 rounded-2xl border border-[#66B2FF]/30 bg-[#66B2FF]/10 p-5"><p className="text-sm text-white/60">Session fee</p><p className="mt-1 text-3xl font-semibold">₹5,000 <span className="text-sm font-normal text-white/50">INR</span></p></div><ul className="mt-6 space-y-3 text-sm text-white/70"><li>✓ Private Google Meet session</li><li>✓ Your chosen coaching or advisory focus</li><li>✓ 40-minute first consultation</li><li>✓ Clear, practical next steps</li></ul></div><div>
     {!ready ? <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2"><label className="text-sm text-white/65">Name<input required value={booking.name} onChange={(e) => setBooking({ ...booking, name: e.target.value })} className="mt-2 h-12 w-full rounded-xl border border-white/15 bg-[#07101A] px-4 text-white" placeholder="Your name" /></label><label className="text-sm text-white/65">Email<input required type="email" value={booking.email} onChange={(e) => setBooking({ ...booking, email: e.target.value })} className="mt-2 h-12 w-full rounded-xl border border-white/15 bg-[#07101A] px-4 text-white" placeholder="you@example.com" /></label><label className="text-sm text-white/65 sm:col-span-2">What would you like help with?<select value={booking.focus} onChange={(e) => setBooking({ ...booking, focus: e.target.value })} className="mt-2 h-12 w-full rounded-xl border border-white/15 bg-[#07101A] px-4 text-white">{services.map((service) => <option key={service.title}>{service.title}</option>)}</select></label><label className="text-sm text-white/65">Preferred date<input required type="date" min={new Date().toISOString().split('T')[0]} value={booking.date} onChange={(e) => setBooking({ ...booking, date: e.target.value })} className="mt-2 h-12 w-full rounded-xl border border-white/15 bg-[#07101A] px-4 text-white" /></label><label className="text-sm text-white/65">Preferred time<input required type="time" value={booking.time} onChange={(e) => setBooking({ ...booking, time: e.target.value })} className="mt-2 h-12 w-full rounded-xl border border-white/15 bg-[#07101A] px-4 text-white" /></label><button className="mt-2 h-12 rounded-xl bg-gradient-to-r from-[#4DA3FF] to-[#2B7BFF] font-semibold text-[#061325] sm:col-span-2">Review & Continue — ₹5,000</button><p className="text-xs leading-5 text-white/45 sm:col-span-2">Your preferred slot is confirmed after availability and payment are verified. Times use your device’s local timezone.</p></form> : <div className="rounded-2xl border border-white/10 bg-[#07101A] p-6"><BadgeCheck size={28} className="text-[#66B2FF]" /><h3 className="mt-4 text-2xl font-semibold">Your session request is ready</h3><p className="mt-3 text-white/65">{booking.focus} • {booking.date} at {booking.time} • ₹5,000</p><div className="mt-6 grid gap-3"><a href={calendarUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#4DA3FF] px-5 py-3 font-semibold text-[#061325]"><CalendarDays size={17} /> Add to Google Calendar</a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}?text=${paymentMessage}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#25D366]/40 bg-[#25D366]/10 px-5 py-3 font-semibold text-[#7bec9e]"><MessageCircle size={17} /> Get secure ₹5,000 payment link</a><button onClick={() => setReady(false)} className="py-2 text-sm text-white/55 hover:text-white">Edit details</button></div><p className="mt-4 text-xs leading-5 text-white/45">After payment confirmation, your final invite and Google Meet link will be sent to {booking.email}.</p></div>}
   </div></div></section>;
 };
 
-const ContactPage = ({ navigateTo }: { navigateTo: (page: Page, hash?: string) => void }) => <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Contact</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Let’s talk about what’s next.</h1><p className="mt-4 max-w-2xl text-xl leading-8 text-white/70">For coaching, career counseling, abroad admissions or personal branding, reach out directly. For citizenship, permanent residency and global mobility, ask about Infinity Global Advisory or explore the platform below.</p><div className="mt-6"><a href="https://www.infinityglobaladvisory.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#8CC7FF]">Citizenship & residency: visit Infinity Global Advisory <ExternalLink size={16} /><span className="platform-sr-only"> (opens in a new tab)</span></a></div><div className="mt-10 grid gap-4 sm:grid-cols-2"><a href={`mailto:${EMAIL}`} className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Mail className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Email</p><p className="mt-1">{EMAIL}</p></a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Phone className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">WhatsApp / Call</p><p className="mt-1">{WHATSAPP}</p></a><a href={YOUTUBE} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Youtube className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">YouTube</p><p className="mt-1">@manishsirg</p></a><div className="rounded-2xl border border-white/10 bg-[#0B111A] p-6"><GraduationCap className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Book online</p><a href="/work-with-me#book" onClick={(event) => { event.preventDefault(); navigateTo('work-with-me', '#book'); }} className="mt-1 inline-flex items-center gap-1 text-[#8CC7FF]">First Counseling Session <ArrowRight size={14} /></a></div></div></section>;
+const ContactPage = ({ navigateTo }: { navigateTo: (page: Page, hash?: string) => void }) => <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Contact</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Let’s talk about what’s next.</h1><p className="mt-4 max-w-2xl text-xl leading-8 text-white/70">Speak directly with Manish about personal transformation, career and education, branding and digital marketing, global opportunities, or property. Tell me where you are and what you want to work towards.</p><div className="mt-6 flex flex-wrap gap-4">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#8CC7FF]">{venture.name}<ExternalLink size={14} /><span className="platform-sr-only"> (opens in a new tab)</span></a>)}</div><div className="mt-10 grid gap-4 sm:grid-cols-2"><a href={`mailto:${EMAIL}`} className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Mail className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Email</p><p className="mt-1">{EMAIL}</p></a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Phone className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">WhatsApp / Call</p><p className="mt-1">{WHATSAPP}</p></a><a href={YOUTUBE} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Youtube className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">YouTube</p><p className="mt-1">@manishsirg</p></a><a href="https://instagram.com/manishsirgg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Instagram className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Instagram</p><p className="mt-1">@manishsirgg</p></a><a href="https://x.com/manishsirg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><XSocialIcon size={24} /><p className="mt-4 text-sm text-white/50">X</p><p className="mt-1">@manishsirg</p></a><div className="rounded-2xl border border-white/10 bg-[#0B111A] p-6"><GraduationCap className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Book online</p><a href="/work-with-me#book" onClick={(event) => { event.preventDefault(); navigateTo('work-with-me', '#book'); }} className="mt-1 inline-flex items-center gap-1 text-[#8CC7FF]">One-on-One Consultation <ArrowRight size={14} /></a></div></div></section>;
 
-const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-xs uppercase tracking-[0.2em] text-[#8CC7FF]">Coach & Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">Men’s coaching, career counseling, abroad admissions and personal branding & digital marketing. Citizenship, permanent residency and global mobility guidance through Infinity Global Advisory.</p></div><SocialLinks /></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
+const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-[9px] uppercase tracking-[0.1em] sm:text-xs text-[#8CC7FF]">Founder • Coach • Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">One-to-one guidance for personal transformation, career and education, brand and digital business growth, citizenship and residency, and property. Explore five focused platforms or start a conversation with Manish.</p></div><SocialLinks /></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
 
 export default App;
