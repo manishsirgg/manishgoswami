@@ -116,7 +116,7 @@ const ventures = [
   { category: 'Personal growth', action: 'Build your discipline', icon: <Target size={22} />, name: 'EvoLeveX', copy: 'Men’s growth, discipline and self-mastery.', href: 'https://EvoLeveX.com' },
   { category: 'Education & career', action: 'Explore your next step', icon: <GraduationCap size={22} />, name: 'VidyaInfinity', copy: 'Career clarity and global education support.', href: 'https://vidyainfinity.com' },
   { category: 'Business & digital', action: 'Grow your digital presence', icon: <Sparkles size={22} />, name: 'InfinityGrowthTech', copy: 'Digital presence, technology and marketing support.', href: 'https://infinitygrowthtech.com' },
-  { category: 'Global advisory', action: 'Explore Infinity Global Advisory', icon: <Plane size={22} />, name: 'Infinity Global Advisory', copy: 'Discover Infinity Global Advisory and explore its services.', href: 'https://www.infinityglobaladvisory.com/' },
+  { category: 'Citizenship & residency', action: 'Explore citizenship & residency options', icon: <Plane size={22} />, name: 'Infinity Global Advisory', copy: 'Citizenship, permanent residency and global mobility guidance.', href: 'https://www.infinityglobaladvisory.com/' },
   { category: 'Real estate', action: 'Explore property connections', icon: <Briefcase size={22} />, name: 'BrickInfinity', copy: 'Simple, trusted real-estate connections.', href: 'https://BrickInfinity.com' },
 ];
 
