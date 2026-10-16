@@ -113,10 +113,10 @@ const services = [
 ];
 
 const ventures = [
-  { name: 'EvoLeveX', copy: 'Men’s growth, discipline and self-mastery.', href: 'https://EvoLeveX.com' },
-  { name: 'VidyaInfinity', copy: 'Career clarity and global education support.', href: 'https://vidyainfinity.com' },
-  { name: 'InfinityGrowthTech', copy: 'Digital presence, technology and marketing support.', href: 'https://infinitygrowthtech.com' },
-  { name: 'BrickInfinity', copy: 'Simple, trusted real-estate connections.', href: 'https://BrickInfinity.com' },
+  { category: 'Personal growth', action: 'Build your discipline', icon: <Target size={22} />, name: 'EvoLeveX', copy: 'Men’s growth, discipline and self-mastery.', href: 'https://EvoLeveX.com' },
+  { category: 'Education & career', action: 'Explore your next step', icon: <GraduationCap size={22} />, name: 'VidyaInfinity', copy: 'Career clarity and global education support.', href: 'https://vidyainfinity.com' },
+  { category: 'Business & digital', action: 'Grow your digital presence', icon: <Sparkles size={22} />, name: 'InfinityGrowthTech', copy: 'Digital presence, technology and marketing support.', href: 'https://infinitygrowthtech.com' },
+  { category: 'Real estate', action: 'Explore property connections', icon: <Briefcase size={22} />, name: 'BrickInfinity', copy: 'Simple, trusted real-estate connections.', href: 'https://BrickInfinity.com' },
 ];
 
 const Container = ({ children, className = '' }: { children: ReactNode; className?: string }) => (
@@ -197,10 +197,14 @@ const App = () => {
               <SocialLinks compact />
               <Button onClick={() => navigateTo('work-with-me')} className="rounded-full px-5 py-2.5">Book 1:1</Button>
             </div>
-            <button className="lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button>
+            <button className="lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation" aria-expanded={mobileOpen}>{mobileOpen ? <X /> : <Menu />}</button>
           </nav>
           {mobileOpen && <div className="border-t border-white/10 py-5 lg:hidden">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="mb-2 block w-full rounded-xl border border-white/10 px-4 py-3 text-left">{item.label}</button>)}<div className="mt-4 border-t border-white/10 pt-4"><SocialLinks /></div></div>}
         </Container>
+        <div className="platform-quick-nav" aria-label="Featured platforms">
+          <a className="platform-quick-label" href="/#platforms" onClick={(event) => { event.preventDefault(); navigateTo('home', '#platforms'); }}>Explore my platforms <ArrowRight size={14} aria-hidden="true" /></a>
+          <div>{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer">{venture.name}<ExternalLink size={12} aria-hidden="true" /><span className="platform-sr-only"> (opens in a new tab)</span></a>)}</div>
+        </div>
       </header>
       <Container className="pb-20">
         <main className="pt-12">
@@ -216,9 +220,35 @@ const App = () => {
   );
 };
 
+const PlatformShowcase = () => (
+  <section id="platforms" className="platform-showcase" aria-labelledby="platforms-heading">
+    <div className="platform-intro">
+      <div>
+        <p className="platform-eyebrow"><span /> The Manish Goswami ecosystem</p>
+        <h2 id="platforms-heading">Your next move starts here.</h2>
+        <p className="platform-description">Four focused platforms. Find the one for your goals and take your next step.</p>
+      </div>
+      <span className="platform-invitation">Choose your direction <ArrowRight size={18} aria-hidden="true" /></span>
+    </div>
+    <div className="platform-grid">
+      {ventures.map((venture, index) => (
+        <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer" className={`platform-card platform-card-${index}`}>
+          <div className="platform-card-top"><span className="platform-icon" aria-hidden="true">{venture.icon}</span><span className="platform-category">{venture.category}</span><ExternalLink size={17} aria-hidden="true" /></div>
+          <h3>{venture.name}</h3>
+          <p>{venture.copy}</p>
+          <span className="platform-goal">{venture.action}</span>
+          <span className="platform-action">Visit {venture.name}<ArrowRight size={18} aria-hidden="true" /></span>
+          <span className="platform-domain">{new URL(venture.href).hostname}<span className="platform-new-tab">Opens in a new tab</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+);
+
 const HomePage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
   <>
-    <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.18)] lg:grid-cols-[1.12fr_0.88fr] lg:p-12">
+    <PlatformShowcase />
+    <section className="relative grid gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0C1221] via-[#090E19] to-[#070A12] p-8 shadow-[0_0_100px_rgba(34,119,255,0.18)] lg:grid-cols-[1.12fr_0.88fr] lg:p-12 mt-10">
       <div className="absolute -right-20 top-16 h-64 w-64 rounded-full bg-[#2d87ff]/20 blur-3xl" />
       <div className="relative self-center">
         <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Coach & Consultant</p>
@@ -240,7 +270,7 @@ const HomePage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
       <div className="flex items-center rounded-2xl border border-[#66B2FF]/25 bg-[#0B1728] p-7"><div><BadgeCheck className="text-[#66B2FF]" size={28} /><p className="mt-4 text-lg font-semibold">Confidential. Practical. Personal.</p><p className="mt-2 text-sm leading-6 text-white/65">Choose your focus and preferred time, then continue to booking.</p><Button onClick={() => navigateTo('work-with-me')} className="mt-5">Schedule Your Session</Button></div></div>
     </section>
 
-    <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Platforms & initiatives</p><h2 className="mt-3 text-3xl font-semibold">Explore the ecosystem</h2><div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noreferrer" className="group rounded-2xl border border-white/10 bg-[#0C111A] p-5 transition hover:-translate-y-1 hover:border-[#66B2FF]/45"><div className="flex items-center justify-between"><h3 className="font-semibold">{venture.name}</h3><ExternalLink size={15} className="text-white/40 group-hover:text-[#8CC7FF]" /></div><p className="mt-3 text-sm leading-6 text-white/65">{venture.copy}</p></a>)}</div></section>
+
   </>
 );
 
