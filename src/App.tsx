@@ -2,7 +2,6 @@ import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import {
   ArrowRight,
   BadgeCheck,
-  Briefcase,
   CalendarDays,
   ExternalLink,
   Facebook,
@@ -44,19 +43,19 @@ const navItems: Array<{ label: string; page: Page; path: string }> = [
 const pageMeta: Record<Page, { title: string; description: string }> = {
   home: {
     title: 'Manish Goswami | Founder, Coach & Consultant',
-    description: 'One-to-one guidance for men’s transformation, career and education, personal branding and digital growth, citizenship and residency, and real estate.',
+    description: 'One-to-one guidance for men’s transformation, career and education, personal branding, digital growth, citizenship and residency.',
   },
   about: {
     title: 'About Manish Goswami | Founder, Coach & Consultant',
-    description: 'Meet Manish Goswami, founder of five platforms supporting personal growth, careers, brands, global opportunities and property decisions.',
+    description: 'Meet Manish Goswami, founder of four platforms supporting personal growth, careers, brands and global opportunities.',
   },
   'work-with-me': {
     title: 'Work With Manish Goswami | One-on-One Consultations',
-    description: 'Book a consultation for personal transformation, career and education, brand and digital growth, citizenship and residency, or property guidance.',
+    description: 'Book a consultation for personal transformation, career and education, brand and digital growth or citizenship and residency.',
   },
   contact: {
     title: 'Contact Manish Goswami | Coaching & Consulting',
-    description: 'Contact Manish Goswami for one-to-one coaching and consulting across personal growth, education, digital business, global opportunities and real estate.',
+    description: 'Contact Manish Goswami for one-to-one coaching and consulting across personal growth, education, digital business and global opportunities.',
   },
 };
 
@@ -113,13 +112,6 @@ const services = [
     copy: 'Explore citizenship, permanent residency and global mobility in the context of your goals. Discuss your priorities and questions as you consider opportunities across borders.',
     points: ['Citizenship goals & pathway exploration', 'Permanent residency & long-term plans', 'Globalship: international mobility & opportunities'],
     icon: <Plane size={22} />, href: 'https://www.infinityglobaladvisory.com/',
-  },
-  {
-    name: 'BrickInfinity', category: 'Real estate marketplace',
-    title: 'Real Estate — Rent, Buy & Sell', action: 'Find your next property connection',
-    copy: 'Bring clarity to your property search or listing goals. Explore a marketplace for renting, buying and selling, and connect your property needs with your next move.',
-    points: ['Explore rental property options', 'Discover properties to buy', 'List property for sale & connect with buyers'],
-    icon: <Briefcase size={22} />, href: 'https://brickinfinity.com/',
   },
 ];
 
@@ -231,8 +223,8 @@ const PlatformShowcase = () => (
     <div className="platform-intro">
       <div>
         <p className="platform-eyebrow"><span /> The Manish Goswami ecosystem</p>
-        <h2 id="platforms-heading">One founder. Five ways to move forward.</h2>
-        <p className="platform-description">Explore Manish Goswami’s platforms for personal transformation, careers, digital growth, global opportunities and property. Choose the one that fits your next step.</p>
+        <h2 id="platforms-heading">One founder. Four ways to move forward.</h2>
+        <p className="platform-description">Explore Manish Goswami’s platforms for personal transformation, careers, digital growth and global opportunities. Choose the one that fits your next step.</p>
       </div>
       <span className="platform-invitation">Choose your direction <ArrowRight size={18} aria-hidden="true" /></span>
     </div>
@@ -255,7 +247,7 @@ const ConsultationApproach = () => (
   <section className={sectionClass} aria-labelledby="consultation-approach-heading">
     <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work directly with Manish</p>
     <h2 id="consultation-approach-heading" className="mt-3 text-3xl font-semibold">Your goals first. A practical way forward.</h2>
-    <p className="mt-4 max-w-3xl leading-8 text-white/75">You may be working on yourself, choosing a career, growing a business, exploring life abroad or planning a property move. Start with the decision in front of you. I’ll help you see how the pieces fit together and choose your next steps.</p>
+    <p className="mt-4 max-w-3xl leading-8 text-white/75">You may be working on yourself, choosing a career, growing a business or exploring life abroad. Start with the decision in front of you. I’ll help you see how the pieces fit together and choose your next steps.</p>
     <div className="mt-7 grid gap-5 md:grid-cols-3">
       {[{ title: '1. Understand your situation', copy: 'Bring your questions, priorities and challenges. We start with your circumstances and what you want to change.' }, { title: '2. Choose your focus', copy: 'Identify the coaching or consulting area that fits your needs, drawing on the relevant platform when useful.' }, { title: '3. Leave with next steps', copy: 'Turn the conversation into clear actions, resources and the right connections for your next stage.' }].map((item) => <article key={item.title} className="rounded-2xl border border-white/10 bg-[#0B111E] p-6"><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{item.copy}</p></article>)}
     </div>
@@ -270,22 +262,22 @@ const HomePage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
       <div className="relative self-center">
         <p className="text-xs uppercase tracking-[0.28em] text-[#66B2FF]">Founder • Coach • Consultant</p>
         <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-6xl">Clarity for your life.<br /><span className="text-[#5EAFFF]">Direction for what’s next.</span></h1>
-        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">I’m Manish Goswami—Founder, Coach & Consultant. I help individuals build themselves, shape their careers, grow their brands and businesses, explore global opportunities, and navigate property decisions.</p>
+        <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">I’m Manish Goswami—Founder, Coach & Consultant. I help individuals build themselves, shape their careers, grow their brands and businesses and explore global opportunities.</p>
         <div className="mt-8 grid gap-3 sm:flex"><Button onClick={() => navigateTo('work-with-me')}>Book a 1:1 Session <ArrowRight size={16} /></Button><Button variant="secondary" onClick={() => navigateTo('about')}>About Manish</Button></div>
-        <p className="mt-7 text-sm text-white/60">Personal Transformation • Career & Education • Brand & Business • Global Opportunities • Property</p>
+        <p className="mt-7 text-sm text-white/60">Personal Transformation • Career & Education • Brand & Business • Global Opportunities</p>
       </div>
       <div className="relative rounded-3xl border border-[#66B2FF]/25 bg-[#070C14] p-3"><img src="/hero.png" alt="Manish Goswami" className="h-full max-h-[620px] w-full rounded-[1.25rem] object-cover" /></div>
     </section>
 
     <section className={sectionClass}>
-      <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">How I can help</p><h2 className="mt-3 text-3xl font-semibold">Five areas of support. Your goals at the centre.</h2>
+      <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">How I can help</p><h2 className="mt-3 text-3xl font-semibold">Four areas of support. Your goals at the centre.</h2>
       <div className="mt-8 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div>
     </section>
 
     <ConsultationApproach />
 
     <section className={`${sectionClass} grid gap-8 lg:grid-cols-[1fr_0.8fr]`}>
-      <div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Start with one conversation</p><h2 className="mt-3 text-3xl font-semibold">One-on-One Consultation</h2><p className="mt-4 max-w-2xl leading-7 text-white/70">A private 40-minute Google Meet session with Manish to discuss your goals in personal transformation, career and education, digital growth, global opportunities or property—and identify practical next steps.</p><div className="mt-6 flex flex-wrap gap-3 text-sm text-white/75"><span className="rounded-full border border-white/15 px-4 py-2">40 minutes</span><span className="rounded-full border border-white/15 px-4 py-2">Google Meet</span><span className="rounded-full border border-[#66B2FF]/40 bg-[#66B2FF]/10 px-4 py-2 font-semibold text-[#A8D4FF]">₹5,000</span></div></div>
+      <div><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Start with one conversation</p><h2 className="mt-3 text-3xl font-semibold">One-on-One Consultation</h2><p className="mt-4 max-w-2xl leading-7 text-white/70">A private 40-minute Google Meet session with Manish to discuss your goals in personal transformation, career and education, digital growth or global opportunities—and identify practical next steps.</p><div className="mt-6 flex flex-wrap gap-3 text-sm text-white/75"><span className="rounded-full border border-white/15 px-4 py-2">40 minutes</span><span className="rounded-full border border-white/15 px-4 py-2">Google Meet</span><span className="rounded-full border border-[#66B2FF]/40 bg-[#66B2FF]/10 px-4 py-2 font-semibold text-[#A8D4FF]">₹5,000</span></div></div>
       <div className="flex items-center rounded-2xl border border-[#66B2FF]/25 bg-[#0B1728] p-7"><div><BadgeCheck className="text-[#66B2FF]" size={28} /><p className="mt-4 text-lg font-semibold">Confidential. Practical. Personal.</p><p className="mt-2 text-sm leading-6 text-white/65">Choose your focus and preferred time, then continue to booking.</p><Button onClick={() => navigateTo('work-with-me')} className="mt-5">Schedule Your Session</Button></div></div>
     </section>
 
@@ -308,9 +300,9 @@ const AboutPage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
     <p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">About</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Manish Goswami</h1><p className="mt-4 text-xl text-white/75">Founder • Coach • Consultant</p>
     <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_0.75fr]">
       <div className="space-y-8 text-white/72">
-        <article><h2 className="text-2xl font-semibold text-white">Guidance built around the person</h2><p className="mt-3 leading-8">I’m Manish Goswami, a founder, coach and consultant helping individuals make clearer decisions and take practical action. My work spans men’s personal transformation, career counselling and education, personal branding and digital marketing, citizenship and residency, and property needs.</p></article>
-        <article><h2 className="text-2xl font-semibold text-white">A connected ecosystem</h2><p className="mt-3 leading-8">I founded EvoLeveX for men’s transformation, VidyaInfinity for careers and education, InfinityGrowthTech for brands and digital business growth, Infinity Global Advisory for citizenship and residency, and BrickInfinity for property connections. Each platform has a distinct purpose; one-to-one consultations bring the right support together around you.</p></article><article><h2 className="text-2xl font-semibold text-white">My approach</h2><p className="mt-3 leading-8">Good guidance does not hand you a generic answer. It asks better questions, understands your context and turns clarity into practical action. Every conversation is direct, confidential and focused on decisions you can use.</p></article>
-        <article><h2 className="text-2xl font-semibold text-white">What I believe</h2><p className="mt-3 leading-8">Growth starts with understanding yourself and making deliberate choices. Whether you’re building confidence, choosing an education path, creating a brand, considering a global move or exploring property, your decisions should fit your goals and circumstances.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">Guidance built around the person</h2><p className="mt-3 leading-8">I’m Manish Goswami, a founder, coach and consultant helping individuals make clearer decisions and take practical action. My work spans men’s personal transformation, career counselling and education, personal branding and digital marketing and citizenship and residency.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">A connected ecosystem</h2><p className="mt-3 leading-8">I founded EvoLeveX for men’s transformation, VidyaInfinity for careers and education, InfinityGrowthTech for brands and digital business growth and Infinity Global Advisory for citizenship and residency. Each platform has a distinct purpose; one-to-one consultations bring the right support together around you.</p></article><article><h2 className="text-2xl font-semibold text-white">My approach</h2><p className="mt-3 leading-8">Good guidance does not hand you a generic answer. It asks better questions, understands your context and turns clarity into practical action. Every conversation is direct, confidential and focused on decisions you can use.</p></article>
+        <article><h2 className="text-2xl font-semibold text-white">What I believe</h2><p className="mt-3 leading-8">Growth starts with understanding yourself and making deliberate choices. Whether you’re building confidence, choosing an education path, creating a brand or considering a global move, your decisions should fit your goals and circumstances.</p></article>
       </div>
       <aside className="rounded-2xl border border-white/10 bg-[#0A101A] p-7"><h2 className="text-xl font-semibold">Areas of focus</h2><div className="mt-5 space-y-3">{services.map((service) => service.title).map((item) => <div key={item} className="flex gap-3 rounded-xl border border-white/10 p-4 text-sm text-white/75"><Target size={17} className="shrink-0 text-[#66B2FF]" />{item}</div>)}</div><Button onClick={() => navigateTo('work-with-me')} className="mt-6 w-full">Work With Me</Button></aside>
     </div>
@@ -320,7 +312,7 @@ const AboutPage = ({ navigateTo }: { navigateTo: (page: Page) => void }) => (
 
 const WorkWithMePage = () => (
   <>
-    <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work with me</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">One clear conversation can change your direction.</h1><p className="mt-4 max-w-3xl text-xl leading-8 text-white/70">Work one-to-one with Manish Goswami on the decisions that matter to you. Choose personal transformation, career and education, branding and digital growth, citizenship and residency, or property. Start with your questions and leave with a clearer direction.</p><div className="mt-10 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div></section>
+    <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Work with me</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">One clear conversation can change your direction.</h1><p className="mt-4 max-w-3xl text-xl leading-8 text-white/70">Work one-to-one with Manish Goswami on the decisions that matter to you. Choose personal transformation, career and education, branding and digital growth or citizenship and residency. Start with your questions and leave with a clearer direction.</p><div className="mt-10 grid gap-5 md:grid-cols-2">{services.map((service) => <ServiceCard key={service.title} {...service} />)}</div></section>
     <ConsultationApproach />
     <BookingCard />
   </>
@@ -345,8 +337,8 @@ const BookingCard = () => {
   </div></div></section>;
 };
 
-const ContactPage = ({ navigateTo }: { navigateTo: (page: Page, hash?: string) => void }) => <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Contact</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Let’s talk about what’s next.</h1><p className="mt-4 max-w-2xl text-xl leading-8 text-white/70">Speak directly with Manish about personal transformation, career and education, branding and digital marketing, global opportunities, or property. Tell me where you are and what you want to work towards.</p><div className="mt-6 flex flex-wrap gap-4">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#8CC7FF]">{venture.name}<ExternalLink size={14} /><span className="platform-sr-only"> (opens in a new tab)</span></a>)}</div><div className="mt-10 grid gap-4 sm:grid-cols-2"><a href={`mailto:${EMAIL}`} className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Mail className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Email</p><p className="mt-1">{EMAIL}</p></a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Phone className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">WhatsApp / Call</p><p className="mt-1">{WHATSAPP}</p></a><a href={YOUTUBE} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Youtube className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">YouTube</p><p className="mt-1">@manishsirg</p></a><a href="https://instagram.com/manishsirgg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Instagram className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Instagram</p><p className="mt-1">@manishsirgg</p></a><a href="https://x.com/manishsirg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><XSocialIcon size={24} /><p className="mt-4 text-sm text-white/50">X</p><p className="mt-1">@manishsirg</p></a><div className="rounded-2xl border border-white/10 bg-[#0B111A] p-6"><GraduationCap className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Book online</p><a href="/work-with-me#book" onClick={(event) => { event.preventDefault(); navigateTo('work-with-me', '#book'); }} className="mt-1 inline-flex items-center gap-1 text-[#8CC7FF]">One-on-One Consultation <ArrowRight size={14} /></a></div></div></section>;
+const ContactPage = ({ navigateTo }: { navigateTo: (page: Page, hash?: string) => void }) => <section className={sectionClass}><p className="text-xs uppercase tracking-[0.25em] text-[#66B2FF]">Contact</p><h1 className="mt-3 text-4xl font-semibold md:text-5xl">Let’s talk about what’s next.</h1><p className="mt-4 max-w-2xl text-xl leading-8 text-white/70">Speak directly with Manish about personal transformation, career and education, branding and digital marketing or global opportunities. Tell me where you are and what you want to work towards.</p><div className="mt-6 flex flex-wrap gap-4">{ventures.map((venture) => <a key={venture.name} href={venture.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#8CC7FF]">{venture.name}<ExternalLink size={14} /><span className="platform-sr-only"> (opens in a new tab)</span></a>)}</div><div className="mt-10 grid gap-4 sm:grid-cols-2"><a href={`mailto:${EMAIL}`} className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Mail className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Email</p><p className="mt-1">{EMAIL}</p></a><a href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Phone className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">WhatsApp / Call</p><p className="mt-1">{WHATSAPP}</p></a><a href={YOUTUBE} target="_blank" rel="noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Youtube className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">YouTube</p><p className="mt-1">@manishsirg</p></a><a href="https://instagram.com/manishsirgg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><Instagram className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Instagram</p><p className="mt-1">@manishsirgg</p></a><a href="https://x.com/manishsirg" target="_blank" rel="noopener noreferrer" className="rounded-2xl border border-white/10 bg-[#0B111A] p-6 hover:border-[#66B2FF]/40"><XSocialIcon size={24} /><p className="mt-4 text-sm text-white/50">X</p><p className="mt-1">@manishsirg</p></a><div className="rounded-2xl border border-white/10 bg-[#0B111A] p-6"><GraduationCap className="text-[#66B2FF]" /><p className="mt-4 text-sm text-white/50">Book online</p><a href="/work-with-me#book" onClick={(event) => { event.preventDefault(); navigateTo('work-with-me', '#book'); }} className="mt-1 inline-flex items-center gap-1 text-[#8CC7FF]">One-on-One Consultation <ArrowRight size={14} /></a></div></div></section>;
 
-const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-[9px] uppercase tracking-[0.1em] sm:text-xs text-[#8CC7FF]">Founder • Coach • Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">One-to-one guidance for personal transformation, career and education, brand and digital business growth, citizenship and residency, and property. Explore five focused platforms or start a conversation with Manish.</p></div><SocialLinks /></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
+const Footer = ({ navigateTo }: { navigateTo: (page: Page) => void }) => <footer className="mt-20 rounded-3xl border border-white/10 bg-[#080d16] p-8 sm:p-10"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="flex items-center gap-3"><img src="/logo.svg" alt="Manish Goswami logo" className="h-11 w-11 rounded-md border border-white/10 bg-black p-1" /><div><p className="font-semibold">Manish Goswami</p><p className="text-[9px] uppercase tracking-[0.1em] sm:text-xs text-[#8CC7FF]">Founder • Coach • Consultant</p></div></div><p className="mt-4 max-w-xl text-sm leading-6 text-white/60">One-to-one guidance for personal transformation, career and education, brand and digital business growth and citizenship and residency. Explore four focused platforms or start a conversation with Manish.</p></div><SocialLinks /></div><div className="mt-7 flex flex-wrap gap-5 border-t border-white/10 pt-6 text-sm text-white/65">{navItems.map((item) => <button key={item.page} onClick={() => navigateTo(item.page)} className="hover:text-white">{item.label}</button>)}</div><p className="mt-6 text-xs text-white/35">© {new Date().getFullYear()} Manish Goswami. All rights reserved.</p></footer>;
 
 export default App;

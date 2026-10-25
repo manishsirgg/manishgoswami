@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Shield, Target, TrendingUp, Dumbbell, GraduationCap, Building2, Home, Plane, ShoppingBag } from 'lucide-react';
+import { Shield, Target, TrendingUp, Dumbbell, GraduationCap, Building2, Plane, ShoppingBag } from 'lucide-react';
 import { ServicePillar, PhilosophyItem, Venture } from './types';
 
 export const BRAND_NAME = "Manish Sir G";
@@ -93,15 +93,6 @@ export const VENTURES: Venture[] = [
     cta: "Build Your Business",
     url: "https://infinitygrowthtech.com",
     icon: <Building2 className="w-7 h-7 text-[#0A84FF]" />
-  },
-  {
-    name: "Brick Infinity",
-    positioning: "Real estate solutions",
-    tagline: "Find. Connect. Move.",
-    offer: ["Buying", "Selling", "Rentals"],
-    cta: "Explore Properties",
-    url: "https://brickinfinity.com",
-    icon: <Home className="w-7 h-7 text-[#0A84FF]" />
   },
   {
     name: "Swift Fly Trips",
