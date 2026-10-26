@@ -1,8 +1,5 @@
 {
-  "name": "Manish Goswami — Founder, Coach & Consultant",
-  "description": "Manish Goswami: one-to-one coaching and consulting for personal transformation, careers and education, brands and digital business and global opportunities.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
+  "name": "Manish Goswami | Founder, Coach & Consultant",
+  "description": "Official personal website for coaching, career and education guidance, digital growth and global opportunities.",
+  "requestFramePermissions": []
 }
